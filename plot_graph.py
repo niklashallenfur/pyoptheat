@@ -18,7 +18,7 @@ db_name = os.getenv('DB_NAME')
 
 # Define the sensor entities (hsc_acc_p1 to hsc_acc_p10) and the time range (last 12 hours)
 sensor_entities = [f'sensor.hsc_acc_p{i}' for i in range(1, 11)]
-time_12_hours_ago = time.time() - timedelta(hours=12).seconds
+time_12_hours_ago = time.time() - timedelta(hours=6).seconds
 
 # Color mapping for each sensor
 sensor_colors = {
