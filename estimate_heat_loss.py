@@ -1,5 +1,6 @@
 import pymysql
 import pandas as pd
+import matplotlib.pyplot as plt
 from datetime import datetime
 from dotenv import load_dotenv
 import os
@@ -57,11 +58,32 @@ df.dropna(inplace=True)
 # Pivot the data so that each sensor's temperature is in its own column
 df_pivot = df.pivot_table(index='last_updated_ts', columns='entity_id', values='state')
 
-# Resample the data to hourly intervals, taking the first value at the start of each hour
-df_resampled = df_pivot.resample('H').first()
+# Define the hourly timestamps within the time range
+hourly_timestamps = pd.date_range(start=start_timestamp, end=end_timestamp, freq='H')
+
+# Initialize an empty DataFrame for the interpolated data
+df_interpolated = pd.DataFrame(index=hourly_timestamps)
+
+# Interpolate temperature values at each hour for each sensor
+for sensor in sensor_entities:
+    sensor_df = df_pivot[sensor]
+
+    # Reindex the sensor data to include hourly timestamps, sort, and interpolate
+    df_interpolated[sensor] = sensor_df.reindex(sensor_df.index.union(hourly_timestamps)).sort_index().interpolate(
+        method='time').reindex(hourly_timestamps)
 
 # Calculate the average temperature of all sensors at the start of each hour
-df_resampled['average_temperature'] = df_resampled.mean(axis=1)
+df_interpolated['average_temperature'] = df_interpolated.mean(axis=1)
 
-# Print the average temperature at the start of each hour
-print(df_resampled[['average_temperature']])
+# Plot the average temperatures
+plt.figure(figsize=(10, 6))
+plt.plot(df_interpolated.index, df_interpolated['average_temperature'], marker='o', linestyle='-', color='b')
+plt.xlabel('Time')
+plt.ylabel('Average Temperature (°C)')
+plt.title('Hourly Average Temperature of 10 Sensors (Interpolated)')
+plt.grid(True)
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Show the plot
+plt.show()
