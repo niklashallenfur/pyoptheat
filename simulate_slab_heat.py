@@ -7,7 +7,7 @@ def simulate_source_battery_sink(T_source, T_battery, T_sink, C_source, C_sink):
     simulation_start_times = pd.date_range(
         start=T_battery.index[0],
         end=T_battery.index[-1],
-        freq='12H'
+        freq='12h'
     )
     simulations = pd.DataFrame(index=T_battery.index)
     # Loop over each simulation start time
