@@ -16,3 +16,7 @@ six==1.16.0
 tzdata==2024.2
 
 scikit-learn~=1.5.2
+PuLP~=2.9.0
+scipy~=1.14.1
+scikit-optimize~=0.10.2
+dataclass-wizard~=0.28.0
