@@ -1,1457 +1,28 @@
 {
-    "result": "Infeasible",
-    "ok": false,
+    "result": "Optimal",
+    "ok": true,
     "plan": [
         {
-            "start": "2024-11-15T14:20:00+01:00",
-            "end": "2024-11-15T14:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.196,
-            "outdoor_temp": 10.1,
-            "rad_flow_temp": 40.255,
-            "acc_temp": 33.566,
-            "consumption": {
-                "radiator": 4463.55,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 180.21407793839998,
-                "total": 4743.7640779384
-            },
-            "pump": {
-                "on_fraction": 2.71016396,
-                "consumption": 6571.49188,
-                "cost": 2.619834762826666,
-                "production": 16405.90178
-            }
-        },
-        {
-            "start": "2024-11-15T14:40:00+01:00",
-            "end": "2024-11-15T15:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.196,
-            "outdoor_temp": 10.1,
-            "rad_flow_temp": 40.255,
-            "acc_temp": 40.255,
-            "consumption": {
-                "radiator": 4463.55,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.308809502,
-                "total": 4828.858809502
-            },
-            "pump": {
-                "on_fraction": 0.7549716,
-                "consumption": 1616.3941955999999,
-                "cost": 0.6444024859792,
-                "production": 4907.3153999999995
-            }
-        },
-        {
-            "start": "2024-11-15T15:00:00+01:00",
-            "end": "2024-11-15T15:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.189,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.2399291,
-                "consumption": 513.6882031,
-                "cost": 0.203591757828633,
-                "production": 1559.53915
-            }
-        },
-        {
-            "start": "2024-11-15T15:20:00+01:00",
-            "end": "2024-11-15T15:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.189,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 38.419082,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 241.95300902617677,
-                "total": 4814.953009026178
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.848549666666667,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T15:40:00+01:00",
-            "end": "2024-11-15T16:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.189,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 39.385567,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 254.24823725689077,
-                "total": 4827.248237256892
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.848549666666667,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T16:00:00+01:00",
-            "end": "2024-11-15T16:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.188,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 40.345,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 266.453752818,
-                "total": 4848.903752818
-            },
-            "pump": {
-                "on_fraction": 0.74598519,
-                "consumption": 1597.15429179,
-                "cost": 0.63247309954884,
-                "production": 4848.903735
-            }
-        },
-        {
-            "start": "2024-11-15T16:20:00+01:00",
-            "end": "2024-11-15T16:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.188,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 40.345,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 266.453752818,
-                "total": 4848.903752818
-            },
-            "pump": {
-                "on_fraction": 0.4901033,
-                "consumption": 1049.3111653,
-                "cost": 0.4155272214588,
-                "production": 3185.6714500000003
-            }
-        },
-        {
-            "start": "2024-11-15T16:40:00+01:00",
-            "end": "2024-11-15T17:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.188,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 39.391027,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 254.31769715139475,
-                "total": 4836.767697151395
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.847836,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T17:00:00+01:00",
-            "end": "2024-11-15T17:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.187,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 40.345,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 266.453752818,
-                "total": 4848.903752818
-            },
-            "pump": {
-                "on_fraction": 0.74598519,
-                "consumption": 1597.15429179,
-                "cost": 0.63194071478491,
-                "production": 4848.903735
-            }
-        },
-        {
-            "start": "2024-11-15T17:20:00+01:00",
-            "end": "2024-11-15T17:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.187,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 40.345,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 266.453752818,
-                "total": 4848.903752818
-            },
-            "pump": {
-                "on_fraction": 0.47794433,
-                "consumption": 1023.27881053,
-                "cost": 0.404877316033037,
-                "production": 3106.638145
-            }
-        },
-        {
-            "start": "2024-11-15T17:40:00+01:00",
-            "end": "2024-11-15T18:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.187,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 39.345697,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 253.74102736790277,
-                "total": 4836.191027367902
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.847122333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T18:00:00+01:00",
-            "end": "2024-11-15T18:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.18,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.74444327,
-                "consumption": 1593.85304107,
-                "cost": 0.626915529487533,
-                "production": 4838.881255
-            }
-        },
-        {
-            "start": "2024-11-15T18:20:00+01:00",
-            "end": "2024-11-15T18:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.18,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.74444327,
-                "consumption": 1593.85304107,
-                "cost": 0.626915529487533,
-                "production": 4838.881255
-            }
-        },
-        {
-            "start": "2024-11-15T18:40:00+01:00",
-            "end": "2024-11-15T19:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.18,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.74444327,
-                "consumption": 1593.85304107,
-                "cost": 0.626915529487533,
-                "production": 4838.881255
-            }
-        },
-        {
-            "start": "2024-11-15T19:00:00+01:00",
-            "end": "2024-11-15T19:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.16,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.25217744,
-                "consumption": 539.91189904,
-                "cost": 0.208765934295467,
-                "production": 1639.1533599999998
-            }
-        },
-        {
-            "start": "2024-11-15T19:20:00+01:00",
-            "end": "2024-11-15T19:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.16,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 38.464746,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 242.53392782153037,
-                "total": 4815.5339278215315
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.827853333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T19:40:00+01:00",
-            "end": "2024-11-15T20:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 1.16,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 39.430898,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 254.8249197619752,
-                "total": 4827.824919761976
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.827853333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T20:00:00+01:00",
-            "end": "2024-11-15T20:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.95,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 40.39,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.026224476,
-                "total": 4858.926224476
-            },
-            "pump": {
-                "on_fraction": 0.49319847,
-                "consumption": 1055.93792427,
-                "cost": 0.3343803426855,
-                "production": 3205.790055
-            }
-        },
-        {
-            "start": "2024-11-15T20:20:00+01:00",
-            "end": "2024-11-15T20:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.95,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 39.441818,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 254.96383955098318,
-                "total": 4846.863839550983
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.677983333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T20:40:00+01:00",
-            "end": "2024-11-15T21:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.95,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 40.39,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.026224476,
-                "total": 4858.926224476
-            },
-            "pump": {
-                "on_fraction": 0.7716676,
-                "consumption": 1652.1403316,
-                "cost": 0.523177771673333,
-                "production": 5015.8394
-            }
-        },
-        {
-            "start": "2024-11-15T21:00:00+01:00",
-            "end": "2024-11-15T21:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.929,
-            "outdoor_temp": 9.6,
-            "rad_flow_temp": 40.480000000000004,
-            "acc_temp": 40.48,
-            "consumption": {
-                "radiator": 4510.800000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 268.17116779199995,
-                "total": 4878.971167792001
-            },
-            "pump": {
-                "on_fraction": 0.75061095,
-                "consumption": 1607.05804395,
-                "cost": 0.49765230760985,
-                "production": 4878.971175
-            }
-        },
-        {
-            "start": "2024-11-15T21:20:00+01:00",
-            "end": "2024-11-15T21:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.929,
-            "outdoor_temp": 9.6,
-            "rad_flow_temp": 40.480000000000004,
-            "acc_temp": 40.48,
-            "consumption": {
-                "radiator": 4510.800000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 268.17116779199995,
-                "total": 4878.971167792001
-            },
-            "pump": {
-                "on_fraction": 0.75061095,
-                "consumption": 1607.05804395,
-                "cost": 0.49765230760985,
-                "production": 4878.971175
-            }
-        },
-        {
-            "start": "2024-11-15T21:40:00+01:00",
-            "end": "2024-11-15T22:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.929,
-            "outdoor_temp": 9.6,
-            "rad_flow_temp": 40.480000000000004,
-            "acc_temp": 40.48,
-            "consumption": {
-                "radiator": 4510.800000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 268.17116779199995,
-                "total": 4878.971167792001
-            },
-            "pump": {
-                "on_fraction": 0.23113195,
-                "consumption": 494.85350495,
-                "cost": 0.153239635366183,
-                "production": 1502.357675
-            }
-        },
-        {
-            "start": "2024-11-15T22:00:00+01:00",
-            "end": "2024-11-15T22:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.914,
-            "outdoor_temp": 9.7,
-            "rad_flow_temp": 40.435,
-            "acc_temp": 38.543291,
-            "consumption": {
-                "radiator": 4501.35,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 243.5331452965884,
-                "total": 4844.883145296589
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.652291333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T22:20:00+01:00",
-            "end": "2024-11-15T22:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.914,
-            "outdoor_temp": 9.7,
-            "rad_flow_temp": 40.435,
-            "acc_temp": 39.492609,
-            "consumption": {
-                "radiator": 4501.35,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 255.60998195057158,
-                "total": 4856.959981950572
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.652291333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-15T22:40:00+01:00",
-            "end": "2024-11-15T23:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.914,
-            "outdoor_temp": 9.7,
-            "rad_flow_temp": 40.435,
-            "acc_temp": 40.435,
-            "consumption": {
-                "radiator": 4501.35,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.59869613399997,
-                "total": 4868.948696134001
-            },
-            "pump": {
-                "on_fraction": 0.74906903,
-                "consumption": 1603.75679323,
-                "cost": 0.488611236337407,
-                "production": 4868.948695
-            }
-        },
-        {
-            "start": "2024-11-15T23:00:00+01:00",
-            "end": "2024-11-15T23:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.903,
-            "outdoor_temp": 9.7,
-            "rad_flow_temp": 40.435,
-            "acc_temp": 40.435,
-            "consumption": {
-                "radiator": 4501.35,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.59869613399997,
-                "total": 4868.948696134001
-            },
-            "pump": {
-                "on_fraction": 0.74906903,
-                "consumption": 1603.75679323,
-                "cost": 0.48273079476223,
-                "production": 4868.948695
-            }
-        },
-        {
-            "start": "2024-11-15T23:20:00+01:00",
-            "end": "2024-11-15T23:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.903,
-            "outdoor_temp": 9.7,
-            "rad_flow_temp": 40.435,
-            "acc_temp": 40.435,
-            "consumption": {
-                "radiator": 4501.35,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.59869613399997,
-                "total": 4868.948696134001
-            },
-            "pump": {
-                "on_fraction": 0.74906903,
-                "consumption": 1603.75679323,
-                "cost": 0.48273079476223,
-                "production": 4868.948695
-            }
-        },
-        {
-            "start": "2024-11-15T23:40:00+01:00",
-            "end": "2024-11-16T00:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.903,
-            "outdoor_temp": 9.7,
-            "rad_flow_temp": 40.435,
-            "acc_temp": 40.435,
-            "consumption": {
-                "radiator": 4501.35,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.59869613399997,
-                "total": 4868.948696134001
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.644441,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T00:00:00+01:00",
-            "end": "2024-11-16T00:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.915,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 41.370515,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 279.49993664808596,
-                "total": 4871.399936648087
-            },
-            "pump": {
-                "on_fraction": 0.23211629,
-                "consumption": 496.96097689,
-                "cost": 0.15157309795145,
-                "production": 1508.755885
-            }
-        },
-        {
-            "start": "2024-11-16T00:20:00+01:00",
-            "end": "2024-11-16T00:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.915,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 39.441818,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 254.96383955098318,
-                "total": 4846.863839550983
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.653005,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T00:40:00+01:00",
-            "end": "2024-11-16T01:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.915,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 40.39,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.026224476,
-                "total": 4858.926224476
-            },
-            "pump": {
-                "on_fraction": 0.74752711,
-                "consumption": 1600.4555425100002,
-                "cost": 0.48813894046555,
-                "production": 4858.926215
-            }
-        },
-        {
-            "start": "2024-11-16T01:00:00+01:00",
-            "end": "2024-11-16T01:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.915,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 40.39,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.026224476,
-                "total": 4858.926224476
-            },
-            "pump": {
-                "on_fraction": 0.74752711,
-                "consumption": 1600.4555425100002,
-                "cost": 0.48813894046555,
-                "production": 4858.926215
-            }
-        },
-        {
-            "start": "2024-11-16T01:20:00+01:00",
-            "end": "2024-11-16T01:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.915,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 40.39,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.026224476,
-                "total": 4858.926224476
-            },
-            "pump": {
-                "on_fraction": 0.74752711,
-                "consumption": 1600.4555425100002,
-                "cost": 0.48813894046555,
-                "production": 4858.926215
-            }
-        },
-        {
-            "start": "2024-11-16T01:40:00+01:00",
-            "end": "2024-11-16T02:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.915,
-            "outdoor_temp": 9.8,
-            "rad_flow_temp": 40.39,
-            "acc_temp": 40.39,
-            "consumption": {
-                "radiator": 4491.900000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.026224476,
-                "total": 4858.926224476
-            },
-            "pump": {
-                "on_fraction": 0.22181227,
-                "consumption": 474.90007007,
-                "cost": 0.14484452137135,
-                "production": 1441.779755
-            }
-        },
-        {
-            "start": "2024-11-16T02:00:00+01:00",
-            "end": "2024-11-16T02:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.905,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 38.430043,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 242.09245040047315,
-                "total": 4824.542450400473
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.645868333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T02:20:00+01:00",
-            "end": "2024-11-16T02:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.905,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 39.391027,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 254.31769715139475,
-                "total": 4836.767697151395
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.645868333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T02:40:00+01:00",
-            "end": "2024-11-16T03:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.905,
-            "outdoor_temp": 9.9,
-            "rad_flow_temp": 40.345,
-            "acc_temp": 40.345,
-            "consumption": {
-                "radiator": 4482.45,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 266.453752818,
-                "total": 4848.903752818
-            },
-            "pump": {
-                "on_fraction": 0.73391495,
-                "consumption": 1571.31190795,
-                "cost": 0.474012425564917,
-                "production": 4770.447174999999
-            }
-        },
-        {
-            "start": "2024-11-16T03:00:00+01:00",
-            "end": "2024-11-16T03:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.74444327,
-                "consumption": 1593.85304107,
-                "cost": 0.48134361840314,
-                "production": 4838.881255
-            }
-        },
-        {
-            "start": "2024-11-16T03:20:00+01:00",
-            "end": "2024-11-16T03:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.18650985,
-                "consumption": 399.31758885,
-                "cost": 0.1205939118327,
-                "production": 1212.3140250000001
-            }
-        },
-        {
-            "start": "2024-11-16T03:40:00+01:00",
-            "end": "2024-11-16T04:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 38.219926,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 239.41942757016238,
-                "total": 4812.419427570163
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.646582,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T04:00:00+01:00",
-            "end": "2024-11-16T04:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10.3,
-            "rad_flow_temp": 40.165,
-            "acc_temp": 39.187864,
-            "consumption": {
-                "radiator": 4444.65,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 251.73314027463357,
-                "total": 4796.383140274633
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.646582,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T04:20:00+01:00",
-            "end": "2024-11-16T04:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10.3,
-            "rad_flow_temp": 40.165,
-            "acc_temp": 40.165,
-            "consumption": {
-                "radiator": 4444.65,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 264.163866186,
-                "total": 4808.813866185999
-            },
-            "pump": {
-                "on_fraction": 0.73981752,
-                "consumption": 1583.94931032,
-                "cost": 0.47835269171664,
-                "production": 4808.81388
-            }
-        },
-        {
-            "start": "2024-11-16T04:40:00+01:00",
-            "end": "2024-11-16T05:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10.3,
-            "rad_flow_temp": 40.165,
-            "acc_temp": 40.165,
-            "consumption": {
-                "radiator": 4444.65,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 264.163866186,
-                "total": 4808.813866185999
-            },
-            "pump": {
-                "on_fraction": 0.46409912,
-                "consumption": 993.6362159199999,
-                "cost": 0.30007813720784,
-                "production": 3016.64428
-            }
-        },
-        {
-            "start": "2024-11-16T05:00:00+01:00",
-            "end": "2024-11-16T05:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10.4,
-            "rad_flow_temp": 40.120000000000005,
-            "acc_temp": 39.137073,
-            "consumption": {
-                "radiator": 4435.200000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 251.08699787504517,
-                "total": 4786.286997875046
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.646582,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T05:20:00+01:00",
-            "end": "2024-11-16T05:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10.4,
-            "rad_flow_temp": 40.120000000000005,
-            "acc_temp": 40.12,
-            "consumption": {
-                "radiator": 4435.200000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 263.59139452799997,
-                "total": 4798.791394528001
-            },
-            "pump": {
-                "on_fraction": 0.7382756,
-                "consumption": 1580.6480596000001,
-                "cost": 0.4773557139992,
-                "production": 4798.7914
-            }
-        },
-        {
-            "start": "2024-11-16T05:40:00+01:00",
-            "end": "2024-11-16T06:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.906,
-            "outdoor_temp": 10.4,
-            "rad_flow_temp": 40.120000000000005,
-            "acc_temp": 40.12,
-            "consumption": {
-                "radiator": 4435.200000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 263.59139452799997,
-                "total": 4798.791394528001
-            },
-            "pump": {
-                "on_fraction": 0.47462745,
-                "consumption": 1016.17737045,
-                "cost": 0.3068855658759,
-                "production": 3085.078425
-            }
-        },
-        {
-            "start": "2024-11-16T06:00:00+01:00",
-            "end": "2024-11-16T06:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.912,
-            "outdoor_temp": 10.4,
-            "rad_flow_temp": 40.120000000000005,
-            "acc_temp": 39.137073,
-            "consumption": {
-                "radiator": 4435.200000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 251.08699787504517,
-                "total": 4786.286997875046
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.650864,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T06:20:00+01:00",
-            "end": "2024-11-16T06:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.912,
-            "outdoor_temp": 10.4,
-            "rad_flow_temp": 40.120000000000005,
-            "acc_temp": 40.12,
-            "consumption": {
-                "radiator": 4435.200000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 263.59139452799997,
-                "total": 4798.791394528001
-            },
-            "pump": {
-                "on_fraction": 0.7382756,
-                "consumption": 1580.6480596000001,
-                "cost": 0.4805170101184,
-                "production": 4798.7914
-            }
-        },
-        {
-            "start": "2024-11-16T06:40:00+01:00",
-            "end": "2024-11-16T07:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.912,
-            "outdoor_temp": 10.4,
-            "rad_flow_temp": 40.120000000000005,
-            "acc_temp": 40.12,
-            "consumption": {
-                "radiator": 4435.200000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 263.59139452799997,
-                "total": 4798.791394528001
-            },
-            "pump": {
-                "on_fraction": 0.81926818,
-                "consumption": 1754.05317338,
-                "cost": 0.53323216470752,
-                "production": 5325.24317
-            }
-        },
-        {
-            "start": "2024-11-16T07:00:00+01:00",
-            "end": "2024-11-16T07:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.921,
-            "outdoor_temp": 10.3,
-            "rad_flow_temp": 40.165,
-            "acc_temp": 40.421955,
-            "consumption": {
-                "radiator": 4444.65,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 267.43274296114197,
-                "total": 4812.082742961142
-            },
-            "pump": {
-                "on_fraction": 0.67139809,
-                "consumption": 1437.4633106899998,
-                "cost": 0.44130123638183,
-                "production": 4364.087584999999
-            }
-        },
-        {
-            "start": "2024-11-16T07:20:00+01:00",
-            "end": "2024-11-16T07:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.921,
-            "outdoor_temp": 10.3,
-            "rad_flow_temp": 40.165,
-            "acc_temp": 40.165,
-            "consumption": {
-                "radiator": 4444.65,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 264.163866186,
-                "total": 4808.813866185999
-            },
-            "pump": {
-                "on_fraction": 0.22742487,
-                "consumption": 486.91664667,
-                "cost": 0.14948341052769,
-                "production": 1478.261655
-            }
-        },
-        {
-            "start": "2024-11-16T07:40:00+01:00",
-            "end": "2024-11-16T08:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.921,
-            "outdoor_temp": 10.3,
-            "rad_flow_temp": 40.165,
-            "acc_temp": 38.25471,
-            "consumption": {
-                "radiator": 4444.65,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 239.861935440204,
-                "total": 4784.511935440204
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.657287,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T08:00:00+01:00",
-            "end": "2024-11-16T08:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.932,
-            "outdoor_temp": 10.2,
-            "rad_flow_temp": 40.21,
-            "acc_temp": 39.238655,
-            "consumption": {
-                "radiator": 4454.1,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 252.37928267422197,
-                "total": 4806.479282674222
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665137333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T08:20:00+01:00",
-            "end": "2024-11-16T08:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.932,
-            "outdoor_temp": 10.2,
-            "rad_flow_temp": 40.21,
-            "acc_temp": 40.21,
-            "consumption": {
-                "radiator": 4454.1,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 264.736337844,
-                "total": 4818.836337844001
-            },
-            "pump": {
-                "on_fraction": 0.50513572,
-                "consumption": 1081.49557652,
-                "cost": 0.335984625772213,
-                "production": 3283.3821799999996
-            }
-        },
-        {
-            "start": "2024-11-16T08:40:00+01:00",
-            "end": "2024-11-16T09:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.932,
-            "outdoor_temp": 10.2,
-            "rad_flow_temp": 40.21,
-            "acc_temp": 39.329316,
-            "consumption": {
-                "radiator": 4454.1,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 253.53263496279837,
-                "total": 4807.632634962799
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665137333333333,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T09:00:00+01:00",
-            "end": "2024-11-16T09:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.934,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.74444327,
-                "consumption": 1593.85304107,
-                "cost": 0.496219580119793,
-                "production": 4838.881255
-            }
-        },
-        {
-            "start": "2024-11-16T09:20:00+01:00",
-            "end": "2024-11-16T09:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.934,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.74444327,
-                "consumption": 1593.85304107,
-                "cost": 0.496219580119793,
-                "production": 4838.881255
-            }
-        },
-        {
-            "start": "2024-11-16T09:40:00+01:00",
-            "end": "2024-11-16T10:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.934,
-            "outdoor_temp": 10,
-            "rad_flow_temp": 40.300000000000004,
-            "acc_temp": 40.3,
-            "consumption": {
-                "radiator": 4473.000000000001,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 265.88128115999996,
-                "total": 4838.881281160001
-            },
-            "pump": {
-                "on_fraction": 0.8047945,
-                "consumption": 1723.0650245,
-                "cost": 0.536447577627667,
-                "production": 5231.16425
-            }
-        },
-        {
-            "start": "2024-11-16T10:00:00+01:00",
-            "end": "2024-11-16T10:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.933,
-            "outdoor_temp": 9.5,
-            "rad_flow_temp": 40.525,
-            "acc_temp": 40.525,
-            "consumption": {
-                "radiator": 4520.25,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 268.74363945,
-                "total": 4888.99363945
-            },
-            "pump": {
-                "on_fraction": 0.066749847,
-                "consumption": 142.911422427,
-                "cost": 0.044445452374797,
-                "production": 433.8740055
-            }
-        },
-        {
-            "start": "2024-11-16T10:20:00+01:00",
-            "end": "2024-11-16T10:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.933,
-            "outdoor_temp": 9.5,
-            "rad_flow_temp": 40.525,
-            "acc_temp": 37.969697,
-            "consumption": {
-                "radiator": 4520.25,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 236.2361162255028,
-                "total": 4856.486116225503
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665851,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T10:40:00+01:00",
-            "end": "2024-11-16T11:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.933,
-            "outdoor_temp": 9.5,
-            "rad_flow_temp": 40.525,
-            "acc_temp": 38.91236,
-            "consumption": {
-                "radiator": 4520.25,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 248.22829068206397,
-                "total": 4868.478290682064
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665851,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T11:00:00+01:00",
-            "end": "2024-11-16T11:20:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.933,
-            "outdoor_temp": 9,
-            "rad_flow_temp": 40.75,
-            "acc_temp": 39.848144,
-            "consumption": {
-                "radiator": 4567.5,
-                "shower": 0,
-                "hot_water": 99.99999999999999,
-                "loss": 260.1329533045056,
-                "total": 4927.6329533045055
-            },
-            "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665851,
-                "production": 6500
-            }
-        },
-        {
-            "start": "2024-11-16T11:20:00+01:00",
-            "end": "2024-11-16T11:40:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.933,
-            "outdoor_temp": 9,
-            "rad_flow_temp": 40.75,
-            "acc_temp": 40.75,
-            "consumption": {
-                "radiator": 4567.5,
-                "shower": 999.9999999999998,
-                "hot_water": 99.99999999999999,
-                "loss": 271.60599774,
-                "total": 5939.10599774
-            },
-            "pump": {
-                "on_fraction": 0.91370862,
-                "consumption": 1956.2501554199998,
-                "cost": 0.60839379833562,
-                "production": 5939.10603
-            }
-        },
-        {
-            "start": "2024-11-16T11:40:00+01:00",
-            "end": "2024-11-16T12:00:00+01:00",
-            "duration": 0.333333333333333,
-            "price": 0.933,
-            "outdoor_temp": 9,
-            "rad_flow_temp": 40.75,
-            "acc_temp": 40.75,
-            "consumption": {
-                "radiator": 4567.5,
-                "shower": 999.9999999999998,
-                "hot_water": 99.99999999999999,
-                "loss": 271.60599774,
-                "total": 5939.10599774
-            },
-            "pump": {
-                "on_fraction": 0.87749788,
-                "consumption": 1878.72296108,
-                "cost": 0.58428284089588,
-                "production": 5703.73622
-            }
-        },
-        {
-            "start": "2024-11-16T12:00:00+01:00",
+            "start": "2024-11-16T12:00:22+01:00",
             "end": "2024-11-16T12:20:00+01:00",
-            "duration": 0.333333333333333,
+            "duration": 0.327222222222222,
             "price": 0.933,
-            "outdoor_temp": 9.3,
-            "rad_flow_temp": 40.615,
-            "acc_temp": 40.615,
+            "outdoor_temp": 8.8,
+            "rad_flow_temp": 21.74,
+            "acc_temp": 37.491,
             "consumption": {
-                "radiator": 4539.150000000001,
+                "radiator": 575.3999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 269.888582766,
-                "total": 4909.038582766
+                "loss": 228.87416886839998,
+                "total": 904.2741688683996
             },
             "pump": {
-                "on_fraction": 0.27254798,
-                "consumption": 583.52522518,
-                "cost": 0.18147634503098,
-                "production": 1771.5618700000002
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         },
         {
@@ -1459,21 +30,22 @@
             "end": "2024-11-16T12:40:00+01:00",
             "duration": 0.333333333333333,
             "price": 0.933,
-            "outdoor_temp": 9.3,
-            "rad_flow_temp": 40.615,
-            "acc_temp": 38.815452,
+            "outdoor_temp": 8.8,
+            "rad_flow_temp": 21.74,
+            "acc_temp": 36.981848,
             "consumption": {
-                "radiator": 4539.150000000001,
+                "radiator": 575.3999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 246.99546660576476,
-                "total": 4886.145466605765
+                "loss": 222.39694465475517,
+                "total": 897.7969446547548
             },
             "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665851,
-                "production": 6500
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         },
         {
@@ -1481,21 +53,22 @@
             "end": "2024-11-16T13:00:00+01:00",
             "duration": 0.333333333333333,
             "price": 0.933,
-            "outdoor_temp": 9.3,
-            "rad_flow_temp": 40.615,
-            "acc_temp": 39.741103,
+            "outdoor_temp": 8.8,
+            "rad_flow_temp": 21.74,
+            "acc_temp": 36.466903,
             "consumption": {
-                "radiator": 4539.150000000001,
+                "radiator": 575.3999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 258.77122133241716,
-                "total": 4897.921221332418
+                "loss": 215.84602425633716,
+                "total": 891.2460242563368
             },
             "pump": {
-                "on_fraction": 1,
-                "consumption": 2141,
-                "cost": 0.665851,
-                "production": 6500
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         },
         {
@@ -1503,21 +76,22 @@
             "end": "2024-11-16T13:20:00+01:00",
             "duration": 0.333333333333333,
             "price": 0.934,
-            "outdoor_temp": 9.2,
-            "rad_flow_temp": 40.660000000000004,
-            "acc_temp": 40.66,
+            "outdoor_temp": 8.8,
+            "rad_flow_temp": 21.74,
+            "acc_temp": 35.955715,
             "consumption": {
-                "radiator": 4548.599999999999,
+                "radiator": 575.3999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 270.461054424,
-                "total": 4919.061054424
+                "loss": 209.342898880566,
+                "total": 884.7428988805657
             },
             "pump": {
-                "on_fraction": 0.75677862,
-                "consumption": 1620.2630254199998,
-                "cost": 0.50444188858076,
-                "production": 4919.06103
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         },
         {
@@ -1525,21 +99,22 @@
             "end": "2024-11-16T13:40:00+01:00",
             "duration": 0.333333333333333,
             "price": 0.934,
-            "outdoor_temp": 9.2,
-            "rad_flow_temp": 40.660000000000004,
-            "acc_temp": 40.66,
+            "outdoor_temp": 8.8,
+            "rad_flow_temp": 21.74,
+            "acc_temp": 35.448257,
             "consumption": {
-                "radiator": 4548.599999999999,
+                "radiator": 575.3999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 270.461054424,
-                "total": 4919.061054424
+                "loss": 202.8872250444468,
+                "total": 878.2872250444465
             },
             "pump": {
-                "on_fraction": 0.75677862,
-                "consumption": 1620.2630254199998,
-                "cost": 0.50444188858076,
-                "production": 4919.06103
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         },
         {
@@ -1547,21 +122,22 @@
             "end": "2024-11-16T14:00:00+01:00",
             "duration": 0.333333333333333,
             "price": 0.934,
-            "outdoor_temp": 9.2,
-            "rad_flow_temp": 40.660000000000004,
-            "acc_temp": 40.66,
+            "outdoor_temp": 8.8,
+            "rad_flow_temp": 21.74,
+            "acc_temp": 34.944502,
             "consumption": {
-                "radiator": 4548.599999999999,
+                "radiator": 575.3999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 270.461054424,
-                "total": 4919.061054424
+                "loss": 196.47865926498477,
+                "total": 871.8786592649844
             },
             "pump": {
-                "on_fraction": 0.75677862,
-                "consumption": 1620.2630254199998,
-                "cost": 0.50444188858076,
-                "production": 4919.06103
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         },
         {
@@ -1569,134 +145,1630 @@
             "end": "2024-11-16T14:20:00+01:00",
             "duration": 0.333333333333333,
             "price": 0.935,
-            "outdoor_temp": 9.2,
-            "rad_flow_temp": 40.660000000000004,
-            "acc_temp": 40.66,
+            "outdoor_temp": 8.6,
+            "rad_flow_temp": 21.83,
+            "acc_temp": 34.444422,
             "consumption": {
-                "radiator": 4548.599999999999,
+                "radiator": 594.2999999999996,
                 "shower": 0,
                 "hot_water": 99.99999999999999,
-                "loss": 270.461054424,
-                "total": 4919.061054424
+                "loss": 190.1168453375928,
+                "total": 884.4168453375923
             },
             "pump": {
                 "on_fraction": 0,
                 "consumption": 0,
                 "cost": 0,
-                "production": 0
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T14:20:00+01:00",
+            "end": "2024-11-16T14:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.935,
+            "outdoor_temp": 8.6,
+            "rad_flow_temp": 21.83,
+            "acc_temp": 33.937151,
+            "consumption": {
+                "radiator": 594.2999999999996,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 183.6635504392524,
+                "total": 877.963550439252
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T14:40:00+01:00",
+            "end": "2024-11-16T15:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.935,
+            "outdoor_temp": 8.6,
+            "rad_flow_temp": 21.83,
+            "acc_temp": 33.433582,
+            "consumption": {
+                "radiator": 594.2999999999996,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 177.25735087597678,
+                "total": 871.5573508759765
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T15:00:00+01:00",
+            "end": "2024-11-16T15:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.977,
+            "outdoor_temp": 8.4,
+            "rad_flow_temp": 21.92,
+            "acc_temp": 32.933686,
+            "consumption": {
+                "radiator": 613.2000000000004,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 170.89787772158638,
+                "total": 884.0978777215868
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T15:20:00+01:00",
+            "end": "2024-11-16T15:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.977,
+            "outdoor_temp": 8.4,
+            "rad_flow_temp": 21.92,
+            "acc_temp": 32.426598,
+            "consumption": {
+                "radiator": 613.2000000000004,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 164.4469108746552,
+                "total": 877.6469108746555
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T15:40:00+01:00",
+            "end": "2024-11-16T16:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.977,
+            "outdoor_temp": 8.4,
+            "rad_flow_temp": 21.92,
+            "acc_temp": 31.92321,
+            "consumption": {
+                "radiator": 613.2000000000004,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 158.043013919604,
+                "total": 871.2430139196044
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T16:00:00+01:00",
+            "end": "2024-11-16T16:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.119,
+            "outdoor_temp": 8.1,
+            "rad_flow_temp": 22.055,
+            "acc_temp": 31.423495,
+            "consumption": {
+                "radiator": 641.55,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 151.685843373438,
+                "total": 893.235843373438
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T16:20:00+01:00",
+            "end": "2024-11-16T16:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.119,
+            "outdoor_temp": 8.1,
+            "rad_flow_temp": 22.055,
+            "acc_temp": 30.911166,
+            "consumption": {
+                "radiator": 641.55,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 145.1682026607384,
+                "total": 886.7182026607384
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T16:40:00+01:00",
+            "end": "2024-11-16T17:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.119,
+            "outdoor_temp": 8.1,
+            "rad_flow_temp": 22.055,
+            "acc_temp": 30.402575,
+            "consumption": {
+                "radiator": 641.55,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 138.69811526043,
+                "total": 880.2481152604299
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T17:00:00+01:00",
+            "end": "2024-11-16T17:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.196,
+            "outdoor_temp": 7.9,
+            "rad_flow_temp": 22.145,
+            "acc_temp": 29.897695,
+            "consumption": {
+                "radiator": 660.4499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 132.275237689518,
+                "total": 892.7252376895179
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T17:20:00+01:00",
+            "end": "2024-11-16T17:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.196,
+            "outdoor_temp": 7.9,
+            "rad_flow_temp": 22.145,
+            "acc_temp": 29.385659,
+            "consumption": {
+                "radiator": 660.4499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 125.76132058691388,
+                "total": 886.2113205869139
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T17:40:00+01:00",
+            "end": "2024-11-16T18:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.196,
+            "outdoor_temp": 7.9,
+            "rad_flow_temp": 22.145,
+            "acc_temp": 28.877358,
+            "consumption": {
+                "radiator": 660.4499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 119.29493135351616,
+                "total": 879.7449313535161
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T18:00:00+01:00",
+            "end": "2024-11-16T18:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.094,
+            "outdoor_temp": 7.6,
+            "rad_flow_temp": 22.28,
+            "acc_temp": 28.372767,
+            "consumption": {
+                "radiator": 688.8000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 112.87572650633005,
+                "total": 901.6757265063302
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T18:20:00+01:00",
+            "end": "2024-11-16T18:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.094,
+            "outdoor_temp": 7.6,
+            "rad_flow_temp": 22.28,
+            "acc_temp": 27.855597,
+            "consumption": {
+                "radiator": 688.8000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 106.29649929266277,
+                "total": 895.096499292663
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T18:40:00+01:00",
+            "end": "2024-11-16T19:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 1.094,
+            "outdoor_temp": 7.6,
+            "rad_flow_temp": 22.28,
+            "acc_temp": 27.3422,
+            "consumption": {
+                "radiator": 688.8000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 99.76527828007619,
+                "total": 888.5652782800764
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T19:00:00+01:00",
+            "end": "2024-11-16T19:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.979,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 26.83255,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 93.28171362477923,
+                "total": 891.5317136247791
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T19:20:00+01:00",
+            "end": "2024-11-16T19:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.979,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 26.321198,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 86.77650318001368,
+                "total": 885.0265031800136
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T19:40:00+01:00",
+            "end": "2024-11-16T20:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.979,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 25.813578,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 80.31876081297024,
+                "total": 878.5687608129701
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T20:00:00+01:00",
+            "end": "2024-11-16T20:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.941,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 25.309661,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 73.9081366798579,
+                "total": 872.1581366798578
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T20:20:00+01:00",
+            "end": "2024-11-16T20:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.941,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 24.809421,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 67.5442898420004,
+                "total": 865.7942898420002
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T20:40:00+01:00",
+            "end": "2024-11-16T21:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.941,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 24.312831,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 61.22687681640288,
+                "total": 859.4768768164028
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T21:00:00+01:00",
+            "end": "2024-11-16T21:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 23.819865,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 54.95556048086676,
+                "total": 872.1055604808666
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T21:20:00+01:00",
+            "end": "2024-11-16T21:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 23.319655,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 48.592097835099715,
+                "total": 865.7420978350996
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-16T21:40:00+01:00",
+            "end": "2024-11-16T22:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.823095,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 42.27506645727419,
+                "total": 859.425066457274
+            },
+            "pump": {
+                "on_fraction": 0.022756738,
+                "consumption": 48.722176057999995,
+                "cost": 0.015152596754038,
+                "production": 147.91879699999998,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-16T22:00:00+01:00",
+            "end": "2024-11-16T22:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.08750649132103,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-16T22:20:00+01:00",
+            "end": "2024-11-16T22:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.08750649132103,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-16T22:40:00+01:00",
+            "end": "2024-11-16T23:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.08750649132103,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-16T23:00:00+01:00",
+            "end": "2024-11-16T23:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.08750649132103,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-16T23:20:00+01:00",
+            "end": "2024-11-16T23:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.08750649132103,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-16T23:40:00+01:00",
+            "end": "2024-11-17T00:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.14349078,
+                "consumption": 307.21375998,
+                "cost": 0.09554347935378,
+                "production": 932.6900700000001,
+                "target_temp": 22.46
+            }
+        },
+        {
+            "start": "2024-11-17T00:00:00+01:00",
+            "end": "2024-11-17T00:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.915,
+            "outdoor_temp": 7.2,
+            "rad_flow_temp": 22.46,
+            "acc_temp": 22.46,
+            "consumption": {
+                "radiator": 726.6000000000001,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.655913504,
+                "total": 864.2559135040001
+            },
+            "pump": {
+                "on_fraction": 0.13296245,
+                "consumption": 284.67260545000005,
+                "cost": 0.08682514466225,
+                "production": 864.255925,
+                "target_temp": 22.46
+            }
+        },
+        {
+            "start": "2024-11-17T00:20:00+01:00",
+            "end": "2024-11-17T00:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.915,
+            "outdoor_temp": 7.2,
+            "rad_flow_temp": 22.46,
+            "acc_temp": 22.46,
+            "consumption": {
+                "radiator": 726.6000000000001,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.655913504,
+                "total": 864.2559135040001
+            },
+            "pump": {
+                "on_fraction": 0.13296245,
+                "consumption": 284.67260545000005,
+                "cost": 0.08682514466225,
+                "production": 864.255925,
+                "target_temp": 22.46
+            }
+        },
+        {
+            "start": "2024-11-17T00:40:00+01:00",
+            "end": "2024-11-17T01:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.915,
+            "outdoor_temp": 7.2,
+            "rad_flow_temp": 22.46,
+            "acc_temp": 22.46,
+            "consumption": {
+                "radiator": 726.6000000000001,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.655913504,
+                "total": 864.2559135040001
+            },
+            "pump": {
+                "on_fraction": 0.10882196,
+                "consumption": 232.98781635999998,
+                "cost": 0.0710612839898,
+                "production": 707.3427399999999,
+                "target_temp": 22.37
+            }
+        },
+        {
+            "start": "2024-11-17T01:00:00+01:00",
+            "end": "2024-11-17T01:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.915,
+            "outdoor_temp": 7.4,
+            "rad_flow_temp": 22.37,
+            "acc_temp": 22.37,
+            "consumption": {
+                "radiator": 707.7000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 36.510970187999995,
+                "total": 844.2109701880001
+            },
+            "pump": {
+                "on_fraction": 0.12987861,
+                "consumption": 278.07010401,
+                "cost": 0.08481138172305,
+                "production": 844.210965,
+                "target_temp": 22.37
+            }
+        },
+        {
+            "start": "2024-11-17T01:20:00+01:00",
+            "end": "2024-11-17T01:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.915,
+            "outdoor_temp": 7.4,
+            "rad_flow_temp": 22.37,
+            "acc_temp": 22.37,
+            "consumption": {
+                "radiator": 707.7000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 36.510970187999995,
+                "total": 844.2109701880001
+            },
+            "pump": {
+                "on_fraction": 0.12987861,
+                "consumption": 278.07010401,
+                "cost": 0.08481138172305,
+                "production": 844.210965,
+                "target_temp": 22.37
+            }
+        },
+        {
+            "start": "2024-11-17T01:40:00+01:00",
+            "end": "2024-11-17T02:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.915,
+            "outdoor_temp": 7.4,
+            "rad_flow_temp": 22.37,
+            "acc_temp": 22.37,
+            "consumption": {
+                "radiator": 707.7000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 36.510970187999995,
+                "total": 844.2109701880001
+            },
+            "pump": {
+                "on_fraction": 0.14194886,
+                "consumption": 303.91250926000004,
+                "cost": 0.0926933153243,
+                "production": 922.66759,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-17T02:00:00+01:00",
+            "end": "2024-11-17T02:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.905,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.084880358676883,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-17T02:20:00+01:00",
+            "end": "2024-11-17T02:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.905,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.13142053,
+                "consumption": 281.37135473,
+                "cost": 0.084880358676883,
+                "production": 854.2334450000001,
+                "target_temp": 22.415
+            }
+        },
+        {
+            "start": "2024-11-17T02:40:00+01:00",
+            "end": "2024-11-17T03:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.905,
+            "outdoor_temp": 7.3,
+            "rad_flow_temp": 22.415,
+            "acc_temp": 22.415,
+            "consumption": {
+                "radiator": 717.1499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 37.083441846,
+                "total": 854.2334418459999
+            },
+            "pump": {
+                "on_fraction": 0.11935028,
+                "consumption": 255.52894948,
+                "cost": 0.077084566426467,
+                "production": 775.77682,
+                "target_temp": 22.37
+            }
+        },
+        {
+            "start": "2024-11-17T03:00:00+01:00",
+            "end": "2024-11-17T03:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.4,
+            "rad_flow_temp": 22.37,
+            "acc_temp": 22.37,
+            "consumption": {
+                "radiator": 707.7000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 36.510970187999995,
+                "total": 844.2109701880001
+            },
+            "pump": {
+                "on_fraction": 0.12987861,
+                "consumption": 278.07010401,
+                "cost": 0.08397717141102,
+                "production": 844.210965,
+                "target_temp": 22.37
+            }
+        },
+        {
+            "start": "2024-11-17T03:20:00+01:00",
+            "end": "2024-11-17T03:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.4,
+            "rad_flow_temp": 22.37,
+            "acc_temp": 22.37,
+            "consumption": {
+                "radiator": 707.7000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 36.510970187999995,
+                "total": 844.2109701880001
+            },
+            "pump": {
+                "on_fraction": 0.12987861,
+                "consumption": 278.07010401,
+                "cost": 0.08397717141102,
+                "production": 844.210965,
+                "target_temp": 22.37
+            }
+        },
+        {
+            "start": "2024-11-17T03:40:00+01:00",
+            "end": "2024-11-17T04:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.4,
+            "rad_flow_temp": 22.37,
+            "acc_temp": 22.37,
+            "consumption": {
+                "radiator": 707.7000000000002,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 36.510970187999995,
+                "total": 844.2109701880001
+            },
+            "pump": {
+                "on_fraction": 0.11780836,
+                "consumption": 252.22769876,
+                "cost": 0.07617276502552,
+                "production": 765.75434,
+                "target_temp": 22.325
+            }
+        },
+        {
+            "start": "2024-11-17T04:00:00+01:00",
+            "end": "2024-11-17T04:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 22.325,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 35.938498530000004,
+                "total": 834.1884985299998
+            },
+            "pump": {
+                "on_fraction": 0.12833669,
+                "consumption": 274.76885329,
+                "cost": 0.08298019369358,
+                "production": 834.188485,
+                "target_temp": 22.325
+            }
+        },
+        {
+            "start": "2024-11-17T04:20:00+01:00",
+            "end": "2024-11-17T04:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 22.325,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 35.938498530000004,
+                "total": 834.1884985299998
+            },
+            "pump": {
+                "on_fraction": 0.12833669,
+                "consumption": 274.76885329,
+                "cost": 0.08298019369358,
+                "production": 834.188485,
+                "target_temp": 22.325
+            }
+        },
+        {
+            "start": "2024-11-17T04:40:00+01:00",
+            "end": "2024-11-17T05:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.5,
+            "rad_flow_temp": 22.325,
+            "acc_temp": 22.325,
+            "consumption": {
+                "radiator": 698.2499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 35.938498530000004,
+                "total": 834.1884985299998
+            },
+            "pump": {
+                "on_fraction": 0.1041962,
+                "consumption": 223.0840642,
+                "cost": 0.0673713873884,
+                "production": 677.2753,
+                "target_temp": 22.235
+            }
+        },
+        {
+            "start": "2024-11-17T05:00:00+01:00",
+            "end": "2024-11-17T05:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.7,
+            "rad_flow_temp": 22.235,
+            "acc_temp": 22.235,
+            "consumption": {
+                "radiator": 679.3499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 34.793555213999994,
+                "total": 814.1435552139999
+            },
+            "pump": {
+                "on_fraction": 0.12525285,
+                "consumption": 268.16635185,
+                "cost": 0.0809862382587,
+                "production": 814.143525,
+                "target_temp": 22.235
+            }
+        },
+        {
+            "start": "2024-11-17T05:20:00+01:00",
+            "end": "2024-11-17T05:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.7,
+            "rad_flow_temp": 22.235,
+            "acc_temp": 22.235,
+            "consumption": {
+                "radiator": 679.3499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 34.793555213999994,
+                "total": 814.1435552139999
+            },
+            "pump": {
+                "on_fraction": 0.12525285,
+                "consumption": 268.16635185,
+                "cost": 0.0809862382587,
+                "production": 814.143525,
+                "target_temp": 22.235
+            }
+        },
+        {
+            "start": "2024-11-17T05:40:00+01:00",
+            "end": "2024-11-17T06:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.906,
+            "outdoor_temp": 7.7,
+            "rad_flow_temp": 22.235,
+            "acc_temp": 22.235,
+            "consumption": {
+                "radiator": 679.3499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 34.793555213999994,
+                "total": 814.1435552139999
+            },
+            "pump": {
+                "on_fraction": 0.12525285,
+                "consumption": 268.16635185,
+                "cost": 0.0809862382587,
+                "production": 814.143525,
+                "target_temp": 22.235
+            }
+        },
+        {
+            "start": "2024-11-17T06:00:00+01:00",
+            "end": "2024-11-17T06:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.912,
+            "outdoor_temp": 7.7,
+            "rad_flow_temp": 22.235,
+            "acc_temp": 22.235,
+            "consumption": {
+                "radiator": 679.3499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 34.793555213999994,
+                "total": 814.1435552139999
+            },
+            "pump": {
+                "on_fraction": 0.12525285,
+                "consumption": 268.16635185,
+                "cost": 0.0815225709624,
+                "production": 814.143525,
+                "target_temp": 22.235
+            }
+        },
+        {
+            "start": "2024-11-17T06:20:00+01:00",
+            "end": "2024-11-17T06:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.912,
+            "outdoor_temp": 7.7,
+            "rad_flow_temp": 22.235,
+            "acc_temp": 22.235,
+            "consumption": {
+                "radiator": 679.3499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 34.793555213999994,
+                "total": 814.1435552139999
+            },
+            "pump": {
+                "on_fraction": 0.12525285,
+                "consumption": 268.16635185,
+                "cost": 0.0815225709624,
+                "production": 814.143525,
+                "target_temp": 22.235
+            }
+        },
+        {
+            "start": "2024-11-17T06:40:00+01:00",
+            "end": "2024-11-17T07:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.912,
+            "outdoor_temp": 7.7,
+            "rad_flow_temp": 22.235,
+            "acc_temp": 22.235,
+            "consumption": {
+                "radiator": 679.3499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 34.793555213999994,
+                "total": 814.1435552139999
+            },
+            "pump": {
+                "on_fraction": 0.22417936,
+                "consumption": 479.96800976,
+                "cost": 0.14591027496704,
+                "production": 1457.16584,
+                "target_temp": 22.603815
+            }
+        },
+        {
+            "start": "2024-11-17T07:00:00+01:00",
+            "end": "2024-11-17T07:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.921,
+            "outdoor_temp": 7.9,
+            "rad_flow_temp": 22.145,
+            "acc_temp": 22.603815,
+            "consumption": {
+                "radiator": 660.4499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 39.485474403642954,
+                "total": 799.9354744036428
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-17T07:20:00+01:00",
+            "end": "2024-11-17T07:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.921,
+            "outdoor_temp": 7.9,
+            "rad_flow_temp": 22.145,
+            "acc_temp": 22.145,
+            "consumption": {
+                "radiator": 660.4499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 33.648611898,
+                "total": 794.098611898
+            },
+            "pump": {
+                "on_fraction": 0.12216902,
+                "consumption": 261.56387182000003,
+                "cost": 0.08030010864874,
+                "production": 794.0986300000001,
+                "target_temp": 22.145
+            }
+        },
+        {
+            "start": "2024-11-17T07:40:00+01:00",
+            "end": "2024-11-17T08:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.921,
+            "outdoor_temp": 7.9,
+            "rad_flow_temp": 22.145,
+            "acc_temp": 22.145,
+            "consumption": {
+                "radiator": 660.4499999999999,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 33.648611898,
+                "total": 794.098611898
+            },
+            "pump": {
+                "on_fraction": 0.23161251,
+                "consumption": 495.88238391,
+                "cost": 0.15223589186037,
+                "production": 1505.481315,
+                "target_temp": 22.553025
+            }
+        },
+        {
+            "start": "2024-11-17T08:00:00+01:00",
+            "end": "2024-11-17T08:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.932,
+            "outdoor_temp": 8,
+            "rad_flow_temp": 22.1,
+            "acc_temp": 22.553025,
+            "consumption": {
+                "radiator": 651.0000000000003,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 38.83933454837304,
+                "total": 789.8393345483734
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
+            }
+        },
+        {
+            "start": "2024-11-17T08:20:00+01:00",
+            "end": "2024-11-17T08:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.932,
+            "outdoor_temp": 8,
+            "rad_flow_temp": 22.1,
+            "acc_temp": 22.1,
+            "consumption": {
+                "radiator": 651.0000000000003,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 33.07614024,
+                "total": 784.0761402400003
+            },
+            "pump": {
+                "on_fraction": 0.1206271,
+                "consumption": 258.2626211,
+                "cost": 0.080233587621733,
+                "production": 784.07615,
+                "target_temp": 22.1
+            }
+        },
+        {
+            "start": "2024-11-17T08:40:00+01:00",
+            "end": "2024-11-17T09:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.932,
+            "outdoor_temp": 8,
+            "rad_flow_temp": 22.1,
+            "acc_temp": 22.1,
+            "consumption": {
+                "radiator": 651.0000000000003,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 33.07614024,
+                "total": 784.0761402400003
+            },
+            "pump": {
+                "on_fraction": 0.08441636,
+                "consumption": 180.73542676,
+                "cost": 0.056148472580107,
+                "production": 548.70634,
+                "target_temp": 21.965
+            }
+        },
+        {
+            "start": "2024-11-17T09:00:00+01:00",
+            "end": "2024-11-17T09:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.934,
+            "outdoor_temp": 8.3,
+            "rad_flow_temp": 21.965,
+            "acc_temp": 21.965,
+            "consumption": {
+                "radiator": 622.65,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 31.358725265999997,
+                "total": 754.0087252659999
+            },
+            "pump": {
+                "on_fraction": 0.11600134,
+                "consumption": 248.35886893999998,
+                "cost": 0.077322394529987,
+                "production": 754.00871,
+                "target_temp": 21.965
+            }
+        },
+        {
+            "start": "2024-11-17T09:20:00+01:00",
+            "end": "2024-11-17T09:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.934,
+            "outdoor_temp": 8.3,
+            "rad_flow_temp": 21.965,
+            "acc_temp": 21.965,
+            "consumption": {
+                "radiator": 622.65,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 31.358725265999997,
+                "total": 754.0087252659999
+            },
+            "pump": {
+                "on_fraction": 0.11600134,
+                "consumption": 248.35886893999998,
+                "cost": 0.077322394529987,
+                "production": 754.00871,
+                "target_temp": 21.965
+            }
+        },
+        {
+            "start": "2024-11-17T09:40:00+01:00",
+            "end": "2024-11-17T10:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.934,
+            "outdoor_temp": 8.3,
+            "rad_flow_temp": 21.965,
+            "acc_temp": 21.965,
+            "consumption": {
+                "radiator": 622.65,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 31.358725265999997,
+                "total": 754.0087252659999
+            },
+            "pump": {
+                "on_fraction": 0.40513543,
+                "consumption": 867.39495563,
+                "cost": 0.270048962852807,
+                "production": 2633.380295,
+                "target_temp": 23.042943
+            }
+        },
+        {
+            "start": "2024-11-17T10:00:00+01:00",
+            "end": "2024-11-17T10:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 8.4,
+            "rad_flow_temp": 21.92,
+            "acc_temp": 23.042943,
+            "consumption": {
+                "radiator": 613.2000000000004,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 45.071872925955475,
+                "total": 758.2718729259559
+            },
+            "pump": {
+                "on_fraction": 1,
+                "consumption": 2141,
+                "cost": 0.665851,
+                "production": 6500,
+                "target_temp": 29.605427
+            }
+        },
+        {
+            "start": "2024-11-17T10:20:00+01:00",
+            "end": "2024-11-17T10:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 8.4,
+            "rad_flow_temp": 21.92,
+            "acc_temp": 26.3362,
+            "consumption": {
+                "radiator": 613.2000000000004,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 86.96734996488,
+                "total": 800.1673499648804
+            },
+            "pump": {
+                "on_fraction": 1,
+                "consumption": 2141,
+                "cost": 0.665851,
+                "production": 6500,
+                "target_temp": 32.8508
+            }
+        },
+        {
+            "start": "2024-11-17T10:40:00+01:00",
+            "end": "2024-11-17T11:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 8.4,
+            "rad_flow_temp": 21.92,
+            "acc_temp": 29.605427,
+            "consumption": {
+                "radiator": 613.2000000000004,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 128.5571233219548,
+                "total": 841.7571233219552
+            },
+            "pump": {
+                "on_fraction": 1,
+                "consumption": 2141,
+                "cost": 0.665851,
+                "production": 6500,
+                "target_temp": 36
+            }
+        },
+        {
+            "start": "2024-11-17T11:00:00+01:00",
+            "end": "2024-11-17T11:20:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 8.6,
+            "rad_flow_temp": 21.83,
+            "acc_temp": 32.8508,
+            "consumption": {
+                "radiator": 594.2999999999996,
+                "shower": 0,
+                "hot_water": 99.99999999999999,
+                "loss": 169.84343581391997,
+                "total": 864.1434358139196
+            },
+            "pump": {
+                "on_fraction": 1,
+                "consumption": 2187.20222,
+                "cost": 0.68021989042,
+                "production": 6354.710000000001,
+                "target_temp": 36
+            }
+        },
+        {
+            "start": "2024-11-17T11:20:00+01:00",
+            "end": "2024-11-17T11:40:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 8.6,
+            "rad_flow_temp": 21.83,
+            "acc_temp": 36,
+            "consumption": {
+                "radiator": 594.2999999999996,
+                "shower": 999.9999999999998,
+                "hot_water": 99.99999999999999,
+                "loss": 209.9062746,
+                "total": 1904.2062745999992
+            },
+            "pump": {
+                "on_fraction": 0.315307119,
+                "consumption": 721.2747617790001,
+                "cost": 0.224316450913269,
+                "production": 1904.2062735,
+                "target_temp": 36
+            }
+        },
+        {
+            "start": "2024-11-17T11:40:00+01:00",
+            "end": "2024-11-17T12:00:00+01:00",
+            "duration": 0.333333333333333,
+            "price": 0.933,
+            "outdoor_temp": 8.6,
+            "rad_flow_temp": 21.83,
+            "acc_temp": 36,
+            "consumption": {
+                "radiator": 594.2999999999996,
+                "shower": 999.9999999999998,
+                "hot_water": 99.99999999999999,
+                "loss": 209.9062746,
+                "total": 1904.2062745999992
+            },
+            "pump": {
+                "on_fraction": 0,
+                "consumption": 0,
+                "cost": 0,
+                "production": 0,
+                "target_temp": 20
             }
         }
     ],
-    "cost": 39.43005233908385,
+    "cost": 6.025055636826042,
     "params": {
-        "time": "2024-11-15T14:20:00+01:00",
+        "time": "2024-11-16T12:00:22+01:00",
         "splitHoursInto": 3,
         "planHours": 24,
         "indoor": {
             "targetTemp": 19,
-            "currentTemp": 19.4,
+            "currentTemp": 19.5,
             "passiveHeatingDegrees": 3
         },
         "outdoor": [
             {
-                "time": "2024-11-15T14:20:00+01:00",
-                "temp": 10.2
-            },
-            {
-                "time": "2024-11-15T14:00:00+01:00",
-                "temp": 10.1
-            },
-            {
-                "time": "2024-11-15T15:00:00+01:00",
-                "temp": 10
-            },
-            {
-                "time": "2024-11-15T16:00:00+01:00",
-                "temp": 9.9
-            },
-            {
-                "time": "2024-11-15T17:00:00+01:00",
-                "temp": 9.9
-            },
-            {
-                "time": "2024-11-15T18:00:00+01:00",
-                "temp": 10
-            },
-            {
-                "time": "2024-11-15T19:00:00+01:00",
-                "temp": 10
-            },
-            {
-                "time": "2024-11-15T20:00:00+01:00",
-                "temp": 9.8
-            },
-            {
-                "time": "2024-11-15T21:00:00+01:00",
-                "temp": 9.6
-            },
-            {
-                "time": "2024-11-15T22:00:00+01:00",
-                "temp": 9.7
-            },
-            {
-                "time": "2024-11-15T23:00:00+01:00",
-                "temp": 9.7
-            },
-            {
-                "time": "2024-11-16T00:00:00+01:00",
-                "temp": 9.8
-            },
-            {
-                "time": "2024-11-16T01:00:00+01:00",
-                "temp": 9.8
-            },
-            {
-                "time": "2024-11-16T02:00:00+01:00",
-                "temp": 9.9
-            },
-            {
-                "time": "2024-11-16T03:00:00+01:00",
-                "temp": 10
-            },
-            {
-                "time": "2024-11-16T04:00:00+01:00",
-                "temp": 10.3
-            },
-            {
-                "time": "2024-11-16T05:00:00+01:00",
-                "temp": 10.4
-            },
-            {
-                "time": "2024-11-16T06:00:00+01:00",
-                "temp": 10.4
-            },
-            {
-                "time": "2024-11-16T07:00:00+01:00",
-                "temp": 10.3
-            },
-            {
-                "time": "2024-11-16T08:00:00+01:00",
-                "temp": 10.2
-            },
-            {
-                "time": "2024-11-16T09:00:00+01:00",
-                "temp": 10
-            },
-            {
-                "time": "2024-11-16T10:00:00+01:00",
-                "temp": 9.5
-            },
-            {
-                "time": "2024-11-16T11:00:00+01:00",
-                "temp": 9
+                "time": "2024-11-16T12:00:22+01:00",
+                "temp": 8.9
             },
             {
                 "time": "2024-11-16T12:00:00+01:00",
-                "temp": 9.3
+                "temp": 8.8
             },
             {
                 "time": "2024-11-16T13:00:00+01:00",
-                "temp": 9.2
+                "temp": 8.8
+            },
+            {
+                "time": "2024-11-16T14:00:00+01:00",
+                "temp": 8.6
+            },
+            {
+                "time": "2024-11-16T15:00:00+01:00",
+                "temp": 8.4
+            },
+            {
+                "time": "2024-11-16T16:00:00+01:00",
+                "temp": 8.1
+            },
+            {
+                "time": "2024-11-16T17:00:00+01:00",
+                "temp": 7.9
+            },
+            {
+                "time": "2024-11-16T18:00:00+01:00",
+                "temp": 7.6
+            },
+            {
+                "time": "2024-11-16T19:00:00+01:00",
+                "temp": 7.5
+            },
+            {
+                "time": "2024-11-16T20:00:00+01:00",
+                "temp": 7.5
+            },
+            {
+                "time": "2024-11-16T21:00:00+01:00",
+                "temp": 7.3
+            },
+            {
+                "time": "2024-11-16T22:00:00+01:00",
+                "temp": 7.3
+            },
+            {
+                "time": "2024-11-16T23:00:00+01:00",
+                "temp": 7.3
+            },
+            {
+                "time": "2024-11-17T00:00:00+01:00",
+                "temp": 7.2
+            },
+            {
+                "time": "2024-11-17T01:00:00+01:00",
+                "temp": 7.4
+            },
+            {
+                "time": "2024-11-17T02:00:00+01:00",
+                "temp": 7.3
+            },
+            {
+                "time": "2024-11-17T03:00:00+01:00",
+                "temp": 7.4
+            },
+            {
+                "time": "2024-11-17T04:00:00+01:00",
+                "temp": 7.5
+            },
+            {
+                "time": "2024-11-17T05:00:00+01:00",
+                "temp": 7.7
+            },
+            {
+                "time": "2024-11-17T06:00:00+01:00",
+                "temp": 7.7
+            },
+            {
+                "time": "2024-11-17T07:00:00+01:00",
+                "temp": 7.9
+            },
+            {
+                "time": "2024-11-17T08:00:00+01:00",
+                "temp": 8
+            },
+            {
+                "time": "2024-11-17T09:00:00+01:00",
+                "temp": 8.3
+            },
+            {
+                "time": "2024-11-17T10:00:00+01:00",
+                "temp": 8.4
+            },
+            {
+                "time": "2024-11-17T11:00:00+01:00",
+                "temp": 8.6
             }
         ],
         "radiator": {
@@ -1705,7 +1777,7 @@
         },
         "accSpec": {
             "liters": 501,
-            "currentTemp": 33.566,
+            "currentTemp": 37.491,
             "minTemp": 20,
             "maxTemp": 80,
             "tempLossPerHourDegrees": 0.02189,
@@ -1743,32 +1815,6 @@
         },
         "prices": {
             "today": [
-                1.171,
-                1.147,
-                1.111,
-                1.105,
-                1.106,
-                1.162,
-                1.186,
-                1.311,
-                1.502,
-                1.502,
-                1.467,
-                1.297,
-                1.209,
-                1.195,
-                1.196,
-                1.189,
-                1.188,
-                1.187,
-                1.18,
-                1.16,
-                0.95,
-                0.929,
-                0.914,
-                0.903
-            ],
-            "tomorrow": [
                 0.915,
                 0.915,
                 0.905,
@@ -1793,12 +1839,13 @@
                 0.933,
                 0.933,
                 0.933
-            ]
+            ],
+            "tomorrow": []
         },
         "showers": [
             {
-                "start": "2024-11-16T11:30:00+01:00",
-                "end": "2024-11-16T12:00:00+01:00",
+                "start": "2024-11-17T11:30:00+01:00",
+                "end": "2024-11-17T12:00:00+01:00",
                 "temp": 36,
                 "energy": 1000
             }

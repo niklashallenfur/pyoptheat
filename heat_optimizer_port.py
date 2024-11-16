@@ -1,11 +1,10 @@
+import json
+from dataclasses import asdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import List, Optional
-import pulp
-import json
-import simplejson
-from dataclasses import asdict, is_dataclass
 
+import pulp
 from dataclass_wizard import fromdict, asdict
 
 
@@ -15,15 +14,18 @@ class IndoorSpec:
     current_temp: Optional[float] = None
     passive_heating_degrees: float = 0.0
 
+
 @dataclass
 class Forecast:
     time: datetime
     temp: float
 
+
 @dataclass
 class RadiatorSpec:
     power_per_temp_delta: float  # W per degree Celsius
     c_flow: float
+
 
 @dataclass
 class AccSpec:
@@ -34,10 +36,12 @@ class AccSpec:
     temp_loss_per_hour_degrees: float
     radiator_flow_temp_above_acc_avg_temp: float = 0.0
 
+
 @dataclass
 class HotWaterSpec:
     min_temp: float
     average_power: float  # W
+
 
 @dataclass
 class PumpPowerSpec:
@@ -45,11 +49,13 @@ class PumpPowerSpec:
     heating_power_watt: float
     below_degrees: Optional[float] = None  # if None, then no limit
 
+
 @dataclass
 class PumpSpec:
     power: List[PumpPowerSpec]
     max_temp: float
     start_delay_minutes: int = 0
+
 
 @dataclass
 class Shower:
@@ -58,10 +64,12 @@ class Shower:
     temp: float
     energy: float  # W
 
+
 @dataclass
 class PriceSpec:
     today: List[float]  # Prices per hour
     tomorrow: Optional[List[float]] = None
+
 
 @dataclass
 class OptimizationParameters:
@@ -77,6 +85,7 @@ class OptimizationParameters:
     prices: PriceSpec
     showers: Optional[List[Shower]] = None
 
+
 class PriceExtractor:
     def __init__(self, price_spec: PriceSpec, start_at: datetime):
         self.start_at = start_at
@@ -85,6 +94,7 @@ class PriceExtractor:
     def get_price_at(self, time: datetime) -> float:
         hour_since_start = int((time - self.start_at).total_seconds() / 3600)
         return self.prices[hour_since_start % len(self.prices)]
+
 
 class OutdoorTempExtractor:
     def __init__(self, forecasts: List[Forecast]):
@@ -98,6 +108,7 @@ class OutdoorTempExtractor:
             else:
                 break
         return temp
+
 
 class PumpEffectExtractor:
     def __init__(self, pump_spec: PumpSpec, acc_volume: float):
@@ -114,6 +125,7 @@ class PumpEffectExtractor:
     def get_heating_per_hour(self, i: int) -> float:
         return self.pump_spec.power[i].heating_power_watt / (self.acc_volume * 1.16)
 
+
 class ShowerExtractor:
     def __init__(self, showers: Optional[List[Shower]] = None):
         self.showers = showers or []
@@ -123,6 +135,7 @@ class ShowerExtractor:
             if not (shower.start >= period['end'] or shower.end <= period['start']):
                 return {'temp': shower.temp, 'power': shower.energy}
         return {'temp': 0.0, 'power': 0.0}
+
 
 class OptimizationService:
     def optimize(self, params: OptimizationParameters):
@@ -155,33 +168,25 @@ class OptimizationService:
 
         acc_heat_capacity = acc_spec.liters * 1.16
 
-        periods = []
-        for i in range(number_of_periods):
-            if i == 0:
-                start = time
-            else:
-                start = current_split_hour_start + timedelta(
-                    minutes=i * (60 / split_hours_into)
-                )
-            end = current_split_hour_start + timedelta(
-                minutes=(i + 1) * (60 / split_hours_into)
-            )
-            duration = (end - start).total_seconds() / 3600.0
-
-            period = {
-                'start': start,
-                'end': end,
-                'duration': duration
+        periods = [
+            {
+                'start': time if i == 0 else current_split_hour_start + timedelta(minutes=i * (60 / split_hours_into)),
+                'end': current_split_hour_start + timedelta(minutes=(i + 1) * (60 / split_hours_into)),
+                'duration': (current_split_hour_start + timedelta(minutes=(i + 1) * (60 / split_hours_into)) - (
+                    time if i == 0 else current_split_hour_start + timedelta(
+                        minutes=i * (60 / split_hours_into)))).total_seconds() / 3600.0
             }
-            periods.append(period)
+            for i in range(number_of_periods)
+        ]
 
-        for period in periods:
-            period['outdoor_temp'] = outdoorTemps.get_temp_at(period['start'])
+        periods = [
+            {**period, 'outdoor_temp': outdoorTemps.get_temp_at(period['start'])}
+            for period in periods
+        ]
 
         for period in periods:
             current_temp = indoor.current_temp if indoor.current_temp is not None else indoor.target_temp
             rad_flow_temp = max(
-                indoor.target_temp +
                 indoor.target_temp +
                 (indoor.target_temp - current_temp) +
                 (indoor.target_temp - period['outdoor_temp'] - indoor.passive_heating_degrees) * radiator.c_flow,
@@ -204,14 +209,16 @@ class OptimizationService:
         for period in periods:
             consumption = {}
             radiator_temp_change = (
-                (period['rad_flow_temp'] - indoor.target_temp) * radiator.power_per_temp_delta * period['duration']
-            ) / acc_heat_capacity
+                                           (period[
+                                                'rad_flow_temp'] - indoor.target_temp) * radiator.power_per_temp_delta *
+                                           period['duration']
+                                   ) / acc_heat_capacity
             hot_water_temp_loss = (
-                (hot_water.average_power / acc_heat_capacity) * period['duration']
+                    (hot_water.average_power / acc_heat_capacity) * period['duration']
             )
             shower_info = showerX.get_shower(period)
             shower_temp_loss = (
-                (period['duration'] * shower_info['power']) / acc_heat_capacity
+                    (period['duration'] * shower_info['power']) / acc_heat_capacity
             )
             consumption['radiator'] = radiator_temp_change
             consumption['hot_water'] = hot_water_temp_loss
@@ -249,7 +256,6 @@ class OptimizationService:
             )
             acc_surrounding_diff.append(var)
 
-
         # constraint temeraturdiff mot omgivningen
         for i, period in enumerate(periods):
             lhs = acc_temp[i] - acc_surrounding_diff[i]
@@ -278,13 +284,13 @@ class OptimizationService:
 
         # Constraint Ackumulatortankens temperaturändring
         for i in range(len(periods) - 1):
-            lhs = acc_temp[i] - acc_temp[i+1] - acc_spec.temp_loss_per_hour_degrees * periods[i]['duration'] * acc_surrounding_diff[i]
             heating_terms = 0
             for j, hph in enumerate(pumpEffect.heating_per_hour_intervals):
                 heating_terms += period_pump[i][j] * hph['deg'] * periods[i]['duration']
-            lhs += heating_terms
-            rhs = periods[i]['consumption']['total']
-            model += (lhs == rhs), f"acc_temp_change_{i}"
+            rhs = acc_temp[i] - acc_spec.temp_loss_per_hour_degrees * periods[i]['duration'] * acc_surrounding_diff[
+                i] + heating_terms - periods[i]['consumption']['total']
+
+            model += (acc_temp[i + 1] == rhs), f"acc_temp_change_{i}"
 
         # Constraint sum of pump power <= 1
         for i, temp_intervals in enumerate(period_pump):
@@ -299,7 +305,7 @@ class OptimizationService:
                     f"acc_below_{i}_{main_hph['max_temp']}",
                     cat='Binary'
                 )
-                objective += -0.00001 * below # "force" to 1
+                objective += -0.00001 * below  # "force" to 1
                 period_acc_below_limit.append(below)
 
                 # either the effect of period_pump[period_i,hph_i] is below the temp limit
@@ -308,9 +314,10 @@ class OptimizationService:
                 for j in range(hph_i + 1):
                     hph = pumpEffect.heating_per_hour_intervals[j]
                     heating_terms += period_pump[i][j] * hph['deg'] * period['duration']
-                temp_after_heating = acc_temp[i] + heating_terms - acc_spec.temp_loss_per_hour_degrees * period['duration'] * acc_surrounding_diff[i]
+                temp_after_heating = acc_temp[i] + heating_terms - acc_spec.temp_loss_per_hour_degrees * period[
+                    'duration'] * acc_surrounding_diff[i]
                 model += (
-                    temp_after_heating <= main_hph['max_temp'] + period['consumption']['total'] + M1 * (1 - below)
+                        temp_after_heating <= main_hph['max_temp'] + period['consumption']['total'] + M1 * (1 - below)
                 ), f"pump_temp_limit_{i}_{hph_i}"
                 model += (period_pump[i][hph_i] <= below), f"pump_below_{i}_{hph_i}"
             acc_below_limit.append(period_acc_below_limit)
@@ -338,14 +345,17 @@ class OptimizationService:
             objective = m.objective
             print(f"Minimize: {objective}")
 
-            # # Print the constraints
-            # print("\nConstraints:")
-            # for name, constraint in m.constraints.items():
-            #     print(f"{name}: {constraint}")
+            # Print the constraints
+            print("\nConstraints:")
+            for name, constraint in m.constraints.items():
+                print(f"{name}: {constraint}")
+            # Print the variables with their bounds
+            print("\nVariables:")
+            for var in m.variables():
+                print(f"{var.name}: Lower bound = {var.lowBound}, Upper bound = {var.upBound}")
 
         # Assuming `model` is your PuLP model
-        print_model_equations(model)
-        print("hellooo!")
+        # print_model_equations(model)
 
         # Retrieve the results
         plan = []
@@ -358,26 +368,34 @@ class OptimizationService:
                 pulp.value(period_pump[i][j]) * pump_spec.power[j].heating_power_watt
                 for j in range(len(pump_spec.power))
             )
+
+            nextHourStartTemp = pulp.value(acc_temp[i + 1]) if (i+1) < len(acc_temp) else  pulp.value(acc_temp[i])
+            fullPowerTargetTemp = max(nextHourStartTemp, pulp.value(acc_temp[i + 2]) if (i+2) < len(acc_temp) else nextHourStartTemp)
+            noPowerTargetTemp = 20
             on_fraction = sum(pulp.value(pump) for pump in period_pump[i])
+            target_temp = noPowerTargetTemp if on_fraction == 0 \
+                else fullPowerTargetTemp if on_fraction > 0.66 \
+                else nextHourStartTemp
             pump = {
                 'on_fraction': on_fraction,
                 'consumption': pump_consumption,
                 'cost': (pump_consumption * period['duration'] * period['price']) / 1000,
-                'production': production
+                'production': production,
+                'target_temp': target_temp
             }
             consumption_radiator = (
-                (period['consumption']['radiator'] * acc_heat_capacity) / period['duration']
+                    (period['consumption']['radiator'] * acc_heat_capacity) / period['duration']
             )
             consumption_hot_water = (
-                (period['consumption']['hot_water'] * acc_heat_capacity) / period['duration']
+                    (period['consumption']['hot_water'] * acc_heat_capacity) / period['duration']
             )
             consumption_shower = (
-                (period['consumption']['shower'] * acc_heat_capacity) / period['duration']
+                    (period['consumption']['shower'] * acc_heat_capacity) / period['duration']
             )
             consumption_loss = (
-                acc_spec.temp_loss_per_hour_degrees *
-                pulp.value(acc_surrounding_diff[i]) *
-                acc_heat_capacity
+                    acc_spec.temp_loss_per_hour_degrees *
+                    pulp.value(acc_surrounding_diff[i]) *
+                    acc_heat_capacity
             )
             consumption = {
                 'radiator': consumption_radiator,
@@ -408,17 +426,14 @@ class OptimizationService:
         }
 
 
-
 with open('output/nodeplan.json', 'r') as file:
     json_text = file.read()
 
-
-
 service = OptimizationService()
-
 
 data = json.loads(json_text)
 params = fromdict(OptimizationParameters, data['params'])
+
 
 def add_timezone_to_showers(params: OptimizationParameters):
     if params.showers:
@@ -428,14 +443,16 @@ def add_timezone_to_showers(params: OptimizationParameters):
             if shower.end.tzinfo is None:
                 shower.end = shower.end.replace(tzinfo=params.time.tzinfo)
 
-add_timezone_to_showers(params)
 
+add_timezone_to_showers(params)
 
 plan = service.optimize(params)
 
+
 class PrettyFloat(float):
     def __repr__(self):
-         return 0 if self == 0 else '%.15g' % self
+        return 0 if self == 0 else '%.15g' % self
+
 
 def custom_serializer(obj):
     if isinstance(obj, datetime):
@@ -448,6 +465,7 @@ def custom_serializer(obj):
     elif isinstance(obj, (list, tuple)):
         return list(map(custom_serializer, obj))
     return obj
+
 
 # Convert the plan to a JSON string
 plan_json = json.dumps(custom_serializer(plan), indent=4)
