@@ -4,31 +4,26 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import List, Optional
 
+from pydantic import BaseModel, validator
+
 import pulp
 from dataclass_wizard import fromdict, asdict
 
 
-@dataclass
-class IndoorSpec:
+class IndoorSpec(BaseModel):
     target_temp: float
     current_temp: Optional[float] = None
     passive_heating_degrees: float = 0.0
 
-
-@dataclass
-class Forecast:
+class Forecast(BaseModel):
     time: datetime
     temp: float
 
-
-@dataclass
-class RadiatorSpec:
-    power_per_temp_delta: float  # W per degree Celsius
+class RadiatorSpec(BaseModel):
+    power_per_temp_delta: float
     c_flow: float
 
-
-@dataclass
-class AccSpec:
+class AccSpec(BaseModel):
     liters: float
     current_temp: float
     min_temp: float
@@ -36,43 +31,31 @@ class AccSpec:
     temp_loss_per_hour_degrees: float
     radiator_flow_temp_above_acc_avg_temp: float = 0.0
 
-
-@dataclass
-class HotWaterSpec:
+class HotWaterSpec(BaseModel):
     min_temp: float
-    average_power: float  # W
+    average_power: float
 
-
-@dataclass
-class PumpPowerSpec:
+class PumpPowerSpec(BaseModel):
     consumed_power_watt: float
     heating_power_watt: float
-    below_degrees: Optional[float] = None  # if None, then no limit
+    below_degrees: Optional[float] = None
 
-
-@dataclass
-class PumpSpec:
+class PumpSpec(BaseModel):
     power: List[PumpPowerSpec]
     max_temp: float
     start_delay_minutes: int = 0
 
-
-@dataclass
-class Shower:
+class Shower(BaseModel):
     start: datetime
     end: datetime
     temp: float
-    energy: float  # W
+    energy: float
 
-
-@dataclass
-class PriceSpec:
-    today: List[float]  # Prices per hour
+class PriceSpec(BaseModel):
+    today: List[float]
     tomorrow: Optional[List[float]] = None
 
-
-@dataclass
-class OptimizationParameters:
+class OptimizationParameters(BaseModel):
     time: datetime
     split_hours_into: int
     plan_hours: int
@@ -84,6 +67,14 @@ class OptimizationParameters:
     pump_spec: PumpSpec
     prices: PriceSpec
     showers: Optional[List[Shower]] = None
+
+    @validator('showers', each_item=True)
+    def add_timezone_to_showers(cls, shower, values):
+        if shower.start.tzinfo is None:
+            shower.start = shower.start.replace(tzinfo=values['time'].tzinfo)
+        if shower.end.tzinfo is None:
+            shower.end = shower.end.replace(tzinfo=values['time'].tzinfo)
+        return shower
 
 
 class PriceExtractor:
@@ -422,54 +413,6 @@ class OptimizationService:
             'ok': status in ['Optimal', 'Feasible'],
             'plan': plan,
             'cost': pulp.value(model.objective),
-            'params': asdict(params)
+            'params': params.dict()
         }
 
-
-with open('output/nodeplan.json', 'r') as file:
-    json_text = file.read()
-
-service = OptimizationService()
-
-data = json.loads(json_text)
-params = fromdict(OptimizationParameters, data['params'])
-
-
-def add_timezone_to_showers(params: OptimizationParameters):
-    if params.showers:
-        for shower in params.showers:
-            if shower.start.tzinfo is None:
-                shower.start = shower.start.replace(tzinfo=params.time.tzinfo)
-            if shower.end.tzinfo is None:
-                shower.end = shower.end.replace(tzinfo=params.time.tzinfo)
-
-
-add_timezone_to_showers(params)
-
-plan = service.optimize(params)
-
-
-class PrettyFloat(float):
-    def __repr__(self):
-        return 0 if self == 0 else '%.15g' % self
-
-
-def custom_serializer(obj):
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    if isinstance(obj, float):
-        val = round(obj, 15)
-        return int(round(val, 0)) if round(val, 0) == val else val
-    elif isinstance(obj, dict):
-        return dict((k, custom_serializer(v)) for k, v in obj.items())
-    elif isinstance(obj, (list, tuple)):
-        return list(map(custom_serializer, obj))
-    return obj
-
-
-# Convert the plan to a JSON string
-plan_json = json.dumps(custom_serializer(plan), indent=4)
-
-# Print the JSON string
-with open('output/pyplan.json', 'w') as file:
-    file.write(plan_json)
