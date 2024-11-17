@@ -8,7 +8,7 @@ import numpy as np
 from load_data import load_data
 
 
-def fit_source_battery_sink(T_source, T_battery, T_sink):
+def fit_source_battery_sink(T_source, T_battery, T_sink, C_battery):
     # Calculate the rate of change of T_slab (radiator_return_temp)
     delta_t = 60  # Time interval in seconds (since data is at 1-minute intervals)
 
@@ -44,19 +44,19 @@ def fit_source_battery_sink(T_source, T_battery, T_sink):
     model.fit(X, Y)
 
     # Extract coefficients
-    C_source = model.coef_[0]
-    C_sink = model.coef_[1]
+    K_source = model.coef_[0] * C_battery
+    K_sink = model.coef_[1] * C_battery
 
-    print(f"Estimated C_source: {C_source}")
-    print(f"Estimated C_sink: {C_sink}")
+    print(f"Estimated K_source: {K_source} W/K")
+    print(f"Estimated K_sink: {K_sink} W/K")
 
     # Calculate R^2 score
     r_squared = model.score(X, Y)
     print(f"R-squared: {r_squared}")
-    return C_source, C_sink
+    return K_source, K_sink
 
 
-def simulate_source_battery_sink(T_source, T_battery, T_sink, C_source, C_sink):
+def simulate_source_battery_sink(T_source, T_battery, T_sink, K_source, K_sink, C_battery):
     # Define simulation start times (every 3 hours within the data range)
     simulation_start_times = pd.date_range(
         start=T_battery.index[0],
@@ -88,9 +88,9 @@ def simulate_source_battery_sink(T_source, T_battery, T_sink, C_source, C_sink):
 
             # Calculate the rate of change
             dT_battery_dt_current = (
-                    C_source * (T_source_current - T_battery_current) +
-                    C_sink * (T_sink_current - T_battery_current)
-            )
+                    K_source * (T_source_current - T_battery_current) +
+                    K_sink * (T_sink_current - T_battery_current)
+            ) / C_battery
 
             # Update T_slab using Euler's method
             T_battery_next = T_battery_current + dT_battery_dt_current * dt
@@ -105,7 +105,43 @@ def simulate_source_battery_sink(T_source, T_battery, T_sink, C_source, C_sink):
     return simulations
 
 
+
 ## Model fitting
+
+heat_capacity_concrete = 840  # J/kg*K
+density_concrete = 2400  # kg/m^3
+slab_area = 9 * 11  # m^2
+
+# Best guess
+slab_thickness = 0.01  # m
+slab_mass = slab_area * slab_thickness * density_concrete  # kg
+slab_thermal_mass = slab_mass * heat_capacity_concrete  # J/K
+# in kWh/K
+slab_thermal_mass_kwh_k = slab_thermal_mass / 3600000
+
+heat_capacity_water = 4186  # J/kg*K
+water_mass = 500  # kg
+water_thermal_mass = water_mass * heat_capacity_water  # J/K
+# in kWh/K
+water_thermal_mass_kwh_k = water_thermal_mass / 3600000
+
+heat_capacity_air = 1000  # J/kg*K
+density_air = 1.2  # kg/m^3
+house_air_volume = slab_area * 4  # m^3
+house_air_mass = house_air_volume * density_air  # kg
+house_air_thermal_mass = house_air_mass * heat_capacity_air  # J/K
+# in kWh/K
+house_air_thermal_mass_kwh_k = house_air_thermal_mass / 3600000
+
+print(f"Slab thermal mass: {slab_thermal_mass} J/K")
+print(f"Slab thermal mass: {slab_thermal_mass / 3600000} kWh/K")
+
+print(f"House air thermal mass: {house_air_thermal_mass} J/K")
+print(f"House air thermal mass: {house_air_thermal_mass / 3600000} kWh/K")
+house_air_thermal_mass = 39000000 * 164/94 # J/K, from https://chatgpt.com/c/671a020c-457c-800a-a517-08dcf9959809
+print(f"House air thermal mass: {house_air_thermal_mass} J/K")
+print(f"House air thermal mass: {house_air_thermal_mass / 3600000} kWh/K")
+
 # start_time = datetime.fromisoformat("2024-10-21T17:00:00+02:00").timestamp()
 # end_time = datetime.fromisoformat("2024-10-24T23:00:00+02:00").timestamp()
 start_time = datetime.fromisoformat("2024-10-21T17:00:00+02:00").timestamp()
@@ -118,13 +154,31 @@ sensor_entities = ['sensor.radiator_flow_temp',
 
 training_data = load_data(sensor_entities, start_time, end_time)
 
-C_flow_radiator, C_radiator_house = fit_source_battery_sink(training_data['sensor.radiator_flow_temp'],
-                                                            training_data['sensor.radiator_return_temp'],
-                                                            training_data['sensor.house_hall_temp'])
+# For the radiator (slab)
+K_flow_slab, K_slab_house = fit_source_battery_sink(
+    training_data['sensor.radiator_flow_temp'],
+    training_data['sensor.radiator_return_temp'],
+    training_data['sensor.house_hall_temp'],
+    C_battery=slab_thermal_mass  # In J/K
+)
 
-C_radiator_house2, C_house_outdoor = fit_source_battery_sink(training_data['sensor.radiator_return_temp'],
-                                                             training_data['sensor.house_hall_temp'],
-                                                             training_data['sensor.climate_coop_temperature'])
+# For the house
+K_slab_house2, K_house_outdoor = fit_source_battery_sink(
+    training_data['sensor.radiator_return_temp'],
+    training_data['sensor.house_hall_temp'],
+    training_data['sensor.climate_coop_temperature'],
+    C_battery=house_air_thermal_mass  # In J/K
+)
+# K_flow_slab, K_slab_house = 980, 368.2 # W/K
+# K_slab_house2, K_house_outdoor = 368.2, 79.6 # W/K
+#
+# K_flow_slab, K_slab_house = 980, 368.2 # W/K
+# K_slab_house2, K_house_outdoor = 368.2, 79.6 # W/K
+
+print()
+
+
+
 
 ## Simulation
 # Simulation interval (new interval)
@@ -137,8 +191,8 @@ T_return = simulation_data['sensor.radiator_return_temp']
 T_house = simulation_data['sensor.house_hall_temp']
 T_outdoor = simulation_data['sensor.climate_coop_temperature']
 
-radiator_simulations = simulate_source_battery_sink(T_flow, T_return, T_house, C_flow_radiator, C_radiator_house)
-house_simulations = simulate_source_battery_sink(T_return, T_house, T_outdoor, C_radiator_house2, C_house_outdoor)
+radiator_simulations = simulate_source_battery_sink(T_flow, T_return, T_house, K_flow_slab, K_slab_house, slab_thermal_mass)
+house_simulations = simulate_source_battery_sink(T_return, T_house, T_outdoor, K_slab_house2, K_house_outdoor, house_air_thermal_mass)
 
 
 # Visualize values in plots
@@ -147,8 +201,8 @@ def format_temp_axis(axs):
     global lines_1, labels_1
     axs.set_xlabel('Time')
     axs.set_ylabel('Temperature (°C)')
-    axs.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M:%S'))
-    axs.xaxis.set_major_locator(mdates.AutoDateLocator())
+    axs.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d %H:%M'))
+    axSim.xaxis.set_major_locator(mdates.HourLocator(interval=6))
     axs.tick_params(axis='x', rotation=45)
     axs.grid(True)
     lines_1, labels_1 = axs.get_legend_handles_labels()
