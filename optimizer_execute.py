@@ -1,8 +1,6 @@
 import json
 from datetime import datetime
 
-from dataclass_wizard import fromdict
-
 from heat_optimizer_port import OptimizationService, OptimizationParameters
 
 with open('output/nodeplan.json', 'r') as file:
@@ -11,7 +9,7 @@ with open('output/nodeplan.json', 'r') as file:
 service = OptimizationService()
 
 data = json.loads(json_text)
-params = OptimizationParameters, data['params']
+params = OptimizationParameters.model_validate(data['params'])
 
 
 def add_timezone_to_showers(params: OptimizationParameters):
