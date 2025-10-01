@@ -1662,12 +1662,12 @@
     "cost": 6.025055636826042,
     "params": {
         "time": "2024-11-16T12:00:22+01:00",
-        "splitHoursInto": 3,
-        "planHours": 24,
+        "split_hours_into": 3,
+        "plan_hours": 24,
         "indoor": {
-            "targetTemp": 19,
-            "currentTemp": 19.5,
-            "passiveHeatingDegrees": 3
+            "target_temp": 19,
+            "current_temp": 19.5,
+            "passive_heating_degrees": 3
         },
         "outdoor": [
             {
@@ -1772,46 +1772,46 @@
             }
         ],
         "radiator": {
-            "powerPerTempDelta": 210,
-            "cFlow": 0.45
+            "power_per_temp_delta": 210,
+            "c_flow": 0.45
         },
-        "accSpec": {
+        "acc_spec": {
             "liters": 501,
-            "currentTemp": 37.491,
-            "minTemp": 20,
-            "maxTemp": 80,
-            "tempLossPerHourDegrees": 0.02189,
-            "radiatorFlowTempAboveAccAvgTemp": 0
+            "current_temp": 37.491,
+            "min_temp": 20,
+            "max_temp": 80,
+            "temp_loss_per_hour_degrees": 0.02189,
+            "radiator_flow_temp_above_acc_avg_temp": 0
         },
-        "hotWater": {
-            "minTemp": 20,
-            "averagePower": 100
+        "hot_water": {
+            "min_temp": 20,
+            "average_power": 100
         },
-        "pumpSpec": {
+        "pump_spec": {
             "power": [
                 {
-                    "consumedPowerWatt": 2141,
-                    "heatingPowerWatt": 6500,
-                    "belowDegrees": 35
+                    "consumed_power_watt": 2141,
+                    "heating_power_watt": 6500,
+                    "below_degrees": 35
                 },
                 {
-                    "consumedPowerWatt": 2300,
-                    "heatingPowerWatt": 6000,
-                    "belowDegrees": 45
+                    "consumed_power_watt": 2300,
+                    "heating_power_watt": 6000,
+                    "below_degrees": 45
                 },
                 {
-                    "consumedPowerWatt": 3000,
-                    "heatingPowerWatt": 5500,
-                    "belowDegrees": 50
+                    "consumed_power_watt": 3000,
+                    "heating_power_watt": 5500,
+                    "below_degrees": 50
                 },
                 {
-                    "consumedPowerWatt": 3100,
-                    "heatingPowerWatt": 4000,
-                    "belowDegrees": null
+                    "consumed_power_watt": 3100,
+                    "heating_power_watt": 4000,
+                    "below_degrees": null
                 }
             ],
-            "maxTemp": 80,
-            "startDelayMinutes": 2
+            "max_temp": 80,
+            "start_delay_minutes": 2
         },
         "prices": {
             "today": [

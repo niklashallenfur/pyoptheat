@@ -1,0 +1,1 @@
+This is a python project. When executing anything with python, make sure to use the environment at .venv
