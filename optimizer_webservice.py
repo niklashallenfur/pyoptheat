@@ -33,3 +33,9 @@ def get_latest_parameters():
         return app.state.latest_params
     else:
         raise HTTPException(status_code=404, detail="No optimization has been performed yet.")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("optimizer_webservice:app", host="0.0.0.0", port=3001, reload=True)
+
+    

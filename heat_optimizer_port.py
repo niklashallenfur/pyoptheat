@@ -3,12 +3,11 @@ from dataclasses import asdict
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import List, Optional
+from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, validator
 
 import pulp
-from dataclass_wizard import fromdict, asdict
-
 
 class IndoorSpec(BaseModel):
     target_temp: float
@@ -83,8 +82,9 @@ class PriceExtractor:
         self.prices = price_spec.today + (price_spec.tomorrow or []) + price_spec.today
 
     def get_price_at(self, time: datetime) -> float:
-        hour_since_start = int((time - self.start_at).total_seconds() / 3600)
-        return self.prices[hour_since_start % len(self.prices)]
+        # assuming prices change every 15 minutes
+        quarter_since_start = int((time - self.start_at).total_seconds() / 900)
+        return self.prices[quarter_since_start % len(self.prices)]
 
 
 class OutdoorTempExtractor:
@@ -142,6 +142,9 @@ class OptimizationService:
         showers = params.showers
 
         number_of_periods = plan_hours * split_hours_into
+
+        # here, time must be converted to swedish time zone
+        time = time.astimezone(ZoneInfo('Europe/Stockholm'))
 
         start_of_current_hour = datetime(time.year, time.month, time.day, time.hour, tzinfo=time.tzinfo)
         start_of_current_day = datetime(time.year, time.month, time.day, tzinfo=time.tzinfo)
