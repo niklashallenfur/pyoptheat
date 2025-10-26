@@ -17,9 +17,15 @@ def fit_k_alpha(df, tout_col: str, thouse_col: str, ptotal_col: str):
     Estimate parameters in the model:
         dT/dt = k * (Tout - Thouse) + alpha * P_total
 
-    Where P_total = radiator_power + constant_appliances_power (230W).
+    Physical interpretation (first-order RC model):
+        C * dT/dt = (Tout - Thouse)/R + P_total
+      => dT/dt = (Tout - Thouse)/(R*C) + P_total/C
+      with k = 1/(R*C) [1/s] and alpha = 1/C [°C/(W*s)]
 
-    Returns dict with k, alpha, capacity (=1/alpha), statistics, and samples used.
+    Where P_total = radiator_power + constant_appliances_power.
+
+    Returns dict with primary physical parameters R [°C/W] and C [J/°C],
+    along with k, alpha, statistics, and samples used.
     """
     df = df.copy()
 
@@ -57,8 +63,8 @@ def fit_k_alpha(df, tout_col: str, thouse_col: str, ptotal_col: str):
 
     # Solve least squares without intercept
     coeffs, residuals_arr, rank, s = np.linalg.lstsq(X, y_vals, rcond=None)
-    k = float(coeffs[0])
-    alpha = float(coeffs[1])
+    k = float(coeffs[0])              # 1/(R*C)  [1/s]
+    alpha = float(coeffs[1])          # 1/C      [°C/(W*s)]
 
     # Residuals and statistics
     y_hat = X @ coeffs
@@ -71,22 +77,65 @@ def fit_k_alpha(df, tout_col: str, thouse_col: str, ptotal_col: str):
     sigma2 = sse / dof
     # Standard errors for coefficients
     XtX_inv = np.linalg.pinv(X.T @ X)
-    se = np.sqrt(np.diag(sigma2 * XtX_inv))
+    cov = sigma2 * XtX_inv
+    se = np.sqrt(np.diag(cov))
     stderr_k = float(se[0])
     stderr_alpha = float(se[1])
+
+    # Derive physical parameters R [°C/W], C [J/°C], and time constant tau [s]
+    # Relations: C = 1/alpha, R = alpha / k, tau = 1/k
+    C = (1.0 / alpha) if alpha != 0 else float('inf')
+    R = (alpha / k) if (k != 0) else float('inf')
+    tau_s = (1.0 / k) if k != 0 else float('inf')
+
+    # Uncertainty propagation (first-order/linearized)
+    # C = 1/alpha  => dC/dalpha = -1/alpha^2
+    var_alpha = float(cov[1, 1])
+    var_k = float(cov[0, 0])
+    cov_k_alpha = float(cov[0, 1])
+    var_C = (var_alpha / (alpha**4)) if np.isfinite(C) else float('inf')
+    # R = alpha/k => dR/dalpha = 1/k, dR/dk = -alpha/k^2
+    if np.isfinite(R):
+        dR_dalpha = 1.0 / k
+        dR_dk = -alpha / (k**2)
+        var_R = (dR_dalpha**2) * var_alpha + (dR_dk**2) * var_k + 2.0 * dR_dalpha * dR_dk * cov_k_alpha
+    else:
+        var_R = float('inf')
+    # tau = 1/k => dtau/dk = -1/k^2
+    if np.isfinite(tau_s):
+        dtau_dk = -1.0 / (k**2)
+        var_tau = (dtau_dk**2) * var_k
+    else:
+        var_tau = float('inf')
+    stderr_C = float(np.sqrt(var_C)) if np.isfinite(var_C) else float('inf')
+    stderr_R = float(np.sqrt(var_R)) if np.isfinite(var_R) else float('inf')
+    stderr_tau_s = float(np.sqrt(var_tau)) if np.isfinite(var_tau) else float('inf')
 
     # R^2 for no-intercept model: 1 - SSE / sum(y^2) (no intercept definition)
     tss0 = float(np.dot(y_vals, y_vals))
     r2 = float(1.0 - sse / tss0) if tss0 > 0 else float('nan')
 
     return {
+        # Primary physical parameters
+        'R_degC_per_W': R,
+        'C_J_per_degC': C,
+        'tau_seconds': tau_s,
+        'tau_hours': tau_s / 3600.0 if np.isfinite(tau_s) else float('inf'),
+        'stderr_R_degC_per_W': stderr_R,
+        'stderr_C_J_per_degC': stderr_C,
+        'stderr_tau_seconds': stderr_tau_s,
+        'stderr_tau_hours': (stderr_tau_s / 3600.0) if np.isfinite(stderr_tau_s) else float('inf'),
+
+        # Fitted linear coefficients (for reference/back-compat)
         'k_per_second': k,
         'k_per_hour': k * 3600.0,
-        'alpha_per_watt': alpha,  # (deg C / (W*s))
+        'alpha_per_watt': alpha,  # (deg C / (W*s)) == 1/C
         'capacity_J_per_degC': (1.0 / alpha) if alpha != 0 else float('inf'),
         'stderr_k_per_second': stderr_k,
         'stderr_k_per_hour': stderr_k * 3600.0,
         'stderr_alpha_per_watt': stderr_alpha,
+
+        # Fit quality
         'r2_no_intercept': r2,
         'n_samples': n,
     }
@@ -153,29 +202,23 @@ def main():
     t_sim = np.empty_like(t_obs_vals)
     t_sim[0] = t_obs_vals[0]  # Initialize with first observed temperature
     
-    k_val = results['k_per_second']
-    alpha_val = results['alpha_per_watt']
-    
-    print(f"k_val initial: {k_val}, alpha_val initial: {alpha_val}")
-    
-    k_val = 0.000001082 # results['k_per_second']
-    alpha_val = 0.00000000774 # results['alpha_per_watt']
-    
-    print(f"k_val initial: {k_val}, alpha_val initial: {alpha_val}")
-    
+    # Use physical parameters R and C for simulation
+    R_val = results['R_degC_per_W']
+    C_val = results['C_J_per_degC']
+
+    print(f"R (°C/W): {R_val}, C (J/°C): {C_val}, tau (h): {results['tau_hours']}")
+
     for j in range(1, len(t_sim)):
-        t_sim[j] = (
-            t_sim[j-1]
-            + (k_val * (tout_vals[j-1] - t_sim[j-1]) + alpha_val * p_total_vals[j-1]) * dt_sec[j]
-        )
+        dTdt = ( (tout_vals[j-1] - t_sim[j-1]) / (R_val * C_val) ) + (p_total_vals[j-1] / C_val)
+        t_sim[j] = t_sim[j-1] + dTdt * dt_sec[j]
     
     df['T_sim'] = t_sim
 
     # Print results
-    print('\n=== House heat exchange estimate ===')
-    print(f"k: {results['k_per_hour']:.6f} ± {results['stderr_k_per_hour']:.6f} 1/h")
-    print(f"alpha: {results['alpha_per_watt']:.3e} ± {results['stderr_alpha_per_watt']:.3e} °C/(W*s)")
-    print(f"Thermal capacity: {results['capacity_J_per_degC']:.0f} J/°C")
+    print('\n=== House heat exchange estimate (RC model) ===')
+    print(f"R: {results['R_degC_per_W']:.3f} ± {results['stderr_R_degC_per_W']:.3f} °C/W")
+    print(f"C: {results['C_J_per_degC']:.0f} ± {results['stderr_C_J_per_degC']:.0f} J/°C")
+    print(f"tau: {results['tau_hours']:.2f} ± {results['stderr_tau_hours']:.2f} h")
     print(f"R²: {results['r2_no_intercept']:.4f}")
     print(f"Number of samples: {results['n_samples']}")
     print(f"Constant appliances power: {constant_appliances_power} W")
@@ -199,7 +242,9 @@ def main():
     
     output_dir = Path('output')
     output_dir.mkdir(exist_ok=True)
-    out_path = output_dir / 'house_k_2025-01-25_to_2025-02-03.json'
+    # Build descriptive filenames using actual period and RC notation
+    period_tag = f"{start_stockholm.date()}_to_{end_stockholm.date()}"
+    out_path = output_dir / f"house_RC_{period_tag}.json"
     
     with out_path.open('w') as f:
         json.dump(output_data, f, indent=2)
@@ -221,8 +266,8 @@ def main():
     
     # Set title
     ax.set_title(
-        f"House thermal model fit: k = {results['k_per_hour']:.6f} 1/h, "
-        f"R² = {results['r2_no_intercept']:.4f}, samples = {results['n_samples']}",
+        f"House thermal model fit: R = {results['R_degC_per_W']:.3f} °C/W, C = {results['C_J_per_degC']:.0f} J/°C, "
+        f"τ = {results['tau_hours']:.2f} h, R² = {results['r2_no_intercept']:.4f}, samples = {results['n_samples']}",
         fontsize=18,
     )
     ax.set_xlabel('Time (Stockholm timezone)', fontsize=16)
@@ -244,7 +289,7 @@ def main():
     plt.tight_layout()
 
     # Save plot
-    png_path = output_dir / 'house_k_2025-01-25_to_2025-02-03.png'
+    png_path = output_dir / f"house_RC_{period_tag}.png"
     plt.savefig(png_path, dpi=150)
     print(f"Saved plot to {png_path}")
     

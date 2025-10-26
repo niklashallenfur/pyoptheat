@@ -109,15 +109,16 @@ def parse_time_range(args: argparse.Namespace) -> TimeRange:
 
 def compute_hourly_profile(
     df: pd.DataFrame, entity: str, tz: ZoneInfo
-) -> Tuple[pd.Series, pd.Series, pd.Series]:
+) -> Tuple[pd.Series, pd.Series, pd.Series, pd.Series]:
     """
     Convert cumulative kWh readings into hourly kWh consumption in local time, then
     compute the mean/std profile per clock hour (0..23).
 
-    Returns:
-      - avg_by_hour: Series indexed by 0..23 with mean kWh per hour
-      - std_by_hour: Series indexed by 0..23 with std kWh per hour
-      - hourly_kwh: hourly series (localized) for reference and debugging
+        Returns:
+            - avg_by_hour: Series indexed by 0..23 with mean kWh per hour
+            - median_by_hour: Series indexed by 0..23 with median kWh per hour
+            - std_by_hour: Series indexed by 0..23 with std kWh per hour
+            - hourly_kwh: hourly series (localized) for reference and debugging
     """
     if df.empty:
         raise ValueError("No data loaded in the selected time range.")
@@ -145,27 +146,35 @@ def compute_hourly_profile(
     # Compute average and std dev by hour-of-day
     hours = hourly_kwh.index.hour
     avg_by_hour = hourly_kwh.groupby(hours).mean()
+    median_by_hour = hourly_kwh.groupby(hours).median()
     std_by_hour = hourly_kwh.groupby(hours).std(ddof=1)
 
     # Ensure full 0..23 index exists even if some hours are missing
     full_hours = pd.RangeIndex(0, 24)
     avg_by_hour = avg_by_hour.reindex(full_hours)
+    median_by_hour = median_by_hour.reindex(full_hours)
     std_by_hour = std_by_hour.reindex(full_hours)
 
-    return avg_by_hour, std_by_hour, hourly_kwh
+    return avg_by_hour, median_by_hour, std_by_hour, hourly_kwh
 
 
 def plot_profile(
-    avg_by_hour: pd.Series, std_by_hour: pd.Series, tr: TimeRange, title: Optional[str] = None
+    avg_by_hour: pd.Series,
+    median_by_hour: pd.Series,
+    std_by_hour: pd.Series,
+    tr: TimeRange,
+    title: Optional[str] = None,
 ):
-    x = np.arange(24)
-    y = avg_by_hour.values
-    yerr = std_by_hour.values
+    x = np.arange(24, dtype=float)
+    y = avg_by_hour.to_numpy(dtype=float)
+    y_med = median_by_hour.to_numpy(dtype=float)
+    yerr = std_by_hour.to_numpy(dtype=float)
 
     fig, ax = plt.subplots(figsize=(12, 6))
     ax.plot(x, y, marker="o", linewidth=2, color="#1f77b4", label="Average kWh per hour")
-    if not np.all(np.isnan(yerr)):
-        ax.fill_between(x, y - yerr, y + yerr, color="#1f77b4", alpha=0.15, label="±1σ")
+    ax.plot(x, y_med, marker="s", linewidth=2, color="#ff7f0e", alpha=0.9, label="Median kWh per hour")
+    if not np.isnan(yerr).all():
+        ax.fill_between(x, y - yerr, y + yerr, color="#1f77b4", alpha=0.15, label="Avg ±1σ")
 
     ax.set_xticks(x)
     ax.set_xlabel("Clock hour (local)")
@@ -204,18 +213,20 @@ def main():
     print(f"Loaded {len(df)} samples from {df.index.min()} to {df.index.max()}")
 
     # Compute profile
-    avg_by_hour, std_by_hour, hourly_kwh = compute_hourly_profile(df, args.entity, tr.tz)
+    avg_by_hour, median_by_hour, std_by_hour, hourly_kwh = compute_hourly_profile(df, args.entity, tr.tz)
 
     # Quick stats
     daily_avg_kwh = float(avg_by_hour.sum(skipna=True))
     print(f"Average daily consumption (sum of hourly means): {daily_avg_kwh:.2f} kWh/day")
 
-    # Print 24-value array (average kWh by clock hour 0..23)
+    # Print 24-value arrays (average and median kWh by clock hour 0..23)
     avg_array = [round(float(x), 3) if pd.notna(x) else None for x in avg_by_hour.values]
     print(avg_array)
+    median_array = [round(float(x), 3) if pd.notna(x) else None for x in median_by_hour.values]
+    print(median_array)
 
     # Plot
-    fig, ax = plot_profile(avg_by_hour, std_by_hour, tr, title=args.title)
+    fig, ax = plot_profile(avg_by_hour, median_by_hour, std_by_hour, tr, title=args.title)
 
     # Optional save artifacts
     if args.save_csv:
@@ -223,6 +234,7 @@ def main():
             {
                 "hour": np.arange(24),
                 "avg_kwh": avg_by_hour.values,
+                "median_kwh": median_by_hour.values,
                 "std_kwh": std_by_hour.values,
             }
         )
