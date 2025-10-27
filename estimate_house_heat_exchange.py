@@ -141,25 +141,137 @@ def fit_k_alpha(df, tout_col: str, thouse_col: str, ptotal_col: str):
     }
 
 
+def fit_RC_fixed_tau(
+    df: pd.DataFrame,
+    tout_col: str,
+    thouse_col: str,
+    ptotal_col: str,
+    tau_hours: float,
+) -> Dict[str, Any]:
+    """
+    Estimate R and C for the first-order RC model while holding tau fixed.
+
+    Model: dT/dt = k * (Tout - Thouse) + alpha * P_total
+      with k = 1/(R*C) and alpha = 1/C
+
+    Given tau = R*C is fixed, k = 1/tau is fixed as well.
+    We solve for alpha via least squares on:
+        y' = y - k * x1 = alpha * x2
+      where y = dT/dt, x1 = (Tout - Thouse), x2 = P_total.
+
+    Returns dict with R, C, tau, alpha, statistics and samples used.
+    """
+    df = df.copy()
+
+    # Time steps and derivative
+    dt_seconds_s = df.index.to_series().diff().dt.total_seconds()
+    dt_seconds = np.asarray(dt_seconds_s.astype(float).values, dtype=float)
+    dT = np.asarray(df[thouse_col].astype(float).diff().values, dtype=float)
+    dT_dt = dT / dt_seconds
+
+    # Predictors
+    x1 = np.asarray((df[tout_col].astype(float) - df[thouse_col].astype(float)).values, dtype=float)
+    x2 = np.asarray(df[ptotal_col].astype(float).values, dtype=float)
+
+    # Aligned data and filter dt
+    data = pd.DataFrame({'x1': x1, 'x2': x2, 'y': dT_dt, 'dt': dt_seconds}, index=df.index).dropna()
+    before = len(data)
+    data = data[(data['dt'] >= 30) & (data['dt'] <= 120)]
+    after = len(data)
+    print(f"[fixed tau] Filtering: kept {after}/{before} samples ({before - after} excluded)")
+
+    if len(data) < 10:
+        raise ValueError(f"Not enough samples after cleaning to fit alpha with fixed tau (have {len(data)})")
+
+    y_vals = np.asarray(data['y'].values, dtype=float)
+    x1_vals = np.asarray(data['x1'].values, dtype=float)
+    x2_vals = np.asarray(data['x2'].values, dtype=float)
+
+    # Fixed k from tau
+    tau_s = float(tau_hours) * 3600.0
+    if not np.isfinite(tau_s) or tau_s <= 0:
+        raise ValueError("tau_hours must be positive")
+    k = 1.0 / tau_s
+
+    # y' = y - k*x1; solve alpha in no-intercept LS: alpha = (x2·y')/(x2·x2)
+    y_prime = y_vals - k * x1_vals
+    denom = float(np.dot(x2_vals, x2_vals))
+    if denom <= 0:
+        raise ValueError("P_total predictor has zero variance; cannot estimate alpha")
+    alpha = float(np.dot(x2_vals, y_prime) / denom)
+
+    # Residuals and stats for the one-parameter fit (alpha)
+    y_hat = k * x1_vals + alpha * x2_vals
+    residuals = y_vals - y_hat
+    n = len(y_vals)
+    p = 1  # only alpha estimated
+    dof = max(n - p, 1)
+    sse = float(np.dot(residuals, residuals))
+    sigma2 = sse / dof
+    stderr_alpha = float(np.sqrt(sigma2 / denom))
+
+    # No-intercept R^2 on y: 1 - SSE / sum(y^2)
+    tss0 = float(np.dot(y_vals, y_vals))
+    r2 = float(1.0 - sse / tss0) if tss0 > 0 else float('nan')
+
+    # Physical parameters
+    C = (1.0 / alpha) if alpha != 0 else float('inf')
+    R = tau_s / C if np.isfinite(C) and C != 0 else float('inf')
+
+    # Uncertainties (k fixed):
+    # var(C) = (dC/dalpha)^2 var(alpha) with C = 1/alpha => dC/dalpha = -1/alpha^2
+    # var(R) = (dR/dalpha)^2 var(alpha) with R = tau * alpha => dR/dalpha = tau
+    var_alpha = stderr_alpha**2
+    var_C = (var_alpha / (alpha**4)) if np.isfinite(C) else float('inf')
+    var_R = (tau_s**2) * var_alpha if np.isfinite(R) else float('inf')
+    stderr_C = float(np.sqrt(var_C)) if np.isfinite(var_C) else float('inf')
+    stderr_R = float(np.sqrt(var_R)) if np.isfinite(var_R) else float('inf')
+
+    return {
+        'fit_type': 'fixed_tau',
+        'tau_seconds': tau_s,
+        'tau_hours': tau_hours,
+        'stderr_tau_seconds': 0.0,
+        'stderr_tau_hours': 0.0,
+        'k_per_second': k,
+        'k_per_hour': k * 3600.0,
+        'alpha_per_watt': alpha,
+        'stderr_alpha_per_watt': stderr_alpha,
+        'R_degC_per_W': R,
+        'C_J_per_degC': C,
+        'stderr_R_degC_per_W': stderr_R,
+        'stderr_C_J_per_degC': stderr_C,
+        'r2_no_intercept': r2,
+        'n_samples': n,
+    }
+
+
 def main():
     # Sensors
     tout = 'sensor.torild_air_temperature'
     thouse = 'sensor.house_hall_temp'
     pradiator = 'sensor.radiator_power'
     
-    # Constant appliances power (W)
+    # Constant internal gains (W) from occupants/plug loads, added to radiator power
+    # Adjust as needed; user requested ~500 W
     constant_appliances_power = 300.0
-
+    tau_fixed_hours = 150
+    
     # Time period: January 25, 2025 at 00:00 to February 3, 2025 at 22:00, Stockholm timezone
     stockholm_tz = ZoneInfo('Europe/Stockholm')
 
     # kläppen
-    # start_stockholm = datetime(2025, 1, 26, 9, 0, 0).replace(tzinfo=stockholm_tz)
-    # end_stockholm = datetime(2025, 2, 2, 17, 0, 0).replace(tzinfo=stockholm_tz)
+    start_stockholm = datetime(2025, 1, 26, 9, 0, 0).replace(tzinfo=stockholm_tz)
+    end_stockholm = datetime(2025, 2, 2, 17, 0, 0).replace(tzinfo=stockholm_tz)
+    
+    # perfect period for tau -> tau = 172h:
+    start_stockholm = datetime(2025, 1, 26, 17, 0, 0).replace(tzinfo=stockholm_tz)
+    end_stockholm = datetime(2025, 2, 1, 18, 0, 0).replace(tzinfo=stockholm_tz)
     
     
-    start_stockholm = datetime(2025, 3, 10, 0, 0, 0).replace(tzinfo=stockholm_tz)
-    end_stockholm = datetime(2025, 3, 17, 0, 0, 0).replace(tzinfo=stockholm_tz)
+    start_stockholm = datetime(2025, 1, 15, 0, 0, 0).replace(tzinfo=stockholm_tz)
+    end_stockholm = datetime(2025, 2, 16, 0, 0, 0).replace(tzinfo=stockholm_tz)
+   
     
    
     # Convert to UTC for data loading
@@ -190,7 +302,12 @@ def main():
         df['P_total_smooth'] = df['P_total'].rolling(5, min_periods=1).mean()
 
     # Fit the model
-    results = fit_k_alpha(df, tout_col=tout, thouse_col=thouse, ptotal_col='P_total')
+    # Option A: unconstrained k/alpha (original linear derivative fit)
+    # results = fit_k_alpha(df, tout_col=tout, thouse_col=thouse, ptotal_col='P_total')
+
+    # Option B: estimate with fixed tau
+    
+    results = fit_RC_fixed_tau(df, tout_col=tout, thouse_col=thouse, ptotal_col='P_total', tau_hours=tau_fixed_hours)
 
     # Simulate the model
     idx = df.index
@@ -204,6 +321,7 @@ def main():
     
     # Use physical parameters R and C for simulation
     R_val = results['R_degC_per_W']
+    # R_val = 1/94.5
     C_val = results['C_J_per_degC']
 
     print(f"R (°C/W): {R_val}, C (J/°C): {C_val}, tau (h): {results['tau_hours']}")
@@ -215,8 +333,8 @@ def main():
     df['T_sim'] = t_sim
 
     # Print results
-    print('\n=== House heat exchange estimate (RC model) ===')
-    print(f"R: {results['R_degC_per_W']:.3f} ± {results['stderr_R_degC_per_W']:.3f} °C/W")
+    print('\n=== House heat exchange estimate (RC model, tau fixed) ===')
+    print(f"R: {results['R_degC_per_W']:.5f} ± {results['stderr_R_degC_per_W']:.5f} °C/W")
     print(f"C: {results['C_J_per_degC']:.0f} ± {results['stderr_C_J_per_degC']:.0f} J/°C")
     print(f"tau: {results['tau_hours']:.2f} ± {results['stderr_tau_hours']:.2f} h")
     print(f"R²: {results['r2_no_intercept']:.4f}")
@@ -264,10 +382,16 @@ def main():
     ax2.set_ylabel('Power (W)', fontsize=16)
     ax2.tick_params(axis='y', labelsize=14)
     
-    # Set title
+    # Set title with human-friendly units: R in K/kW, C in kWh/K
+    R_K_per_kW = results['R_degC_per_W'] * 1000.0
+    C_kWh_per_K = results['C_J_per_degC'] / 3_600_000.0
     ax.set_title(
-        f"House thermal model fit: R = {results['R_degC_per_W']:.3f} °C/W, C = {results['C_J_per_degC']:.0f} J/°C, "
-        f"τ = {results['tau_hours']:.2f} h, R² = {results['r2_no_intercept']:.4f}, samples = {results['n_samples']}",
+        (
+            f"House thermal model fit: R = {R_K_per_kW:.3f} K/kW, "
+            f"C = {C_kWh_per_K:.3f} kWh/K, "
+            f"τ = {results['tau_hours']:.2f} h, "
+            f"R² = {results['r2_no_intercept']:.4f}, samples = {results['n_samples']}"
+        ),
         fontsize=18,
     )
     ax.set_xlabel('Time (Stockholm timezone)', fontsize=16)
