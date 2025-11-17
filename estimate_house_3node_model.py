@@ -26,7 +26,7 @@ def compute_capacities_and_resistances():
     # Slab capacity
     slab_area = 11.0 * 9.0  # m²
     # slab_thickness = 0.42    # m
-    slab_thickness = 0.42    # m
+    slab_thickness = 0.06    # m
     slab_volume = slab_area * slab_thickness
     rho_concrete = 2400.0    # kg/m³
     cp_concrete = 880.0      # J/(kg*K)
@@ -43,15 +43,15 @@ def compute_capacities_and_resistances():
     C_a = air_mass * cp_air
 
     # Structure capacity: less certain, assume, say, 5x air capacity as a starting point
-    C_b = 10.0 * C_a
+    C_b = 10.0 * 3600 * 1000  # J/K (equiv. to 5x air capacity)
 
     # Total R from slab to outdoor (K/W)
     R_total = 8.3 / 1000.0  # K/kW => K/W
 
     # Split R_total into three segments; air-structure typically large, so bias there
-    R_sa = 0.2 * R_total
+    R_sa = 0.1 * R_total
     R_ab = 0.4 * R_total
-    R_bo = 0.4 * R_total
+    R_bo = 0.5 * R_total
 
     return C_a, C_s, C_b, R_sa, R_ab, R_bo
 
@@ -173,6 +173,7 @@ def main():
     print(f"  C_a (air)   = {C_a/3_600_000:.3f} kWh/K")
     print(f"  C_s (slab)  = {C_s/3_600_000:.3f} kWh/K")
     print(f"  C_b (struct)= {C_b/3_600_000:.3f} kWh/K")
+    print(f"  C_total     = {(C_a + C_s + C_b)/3_600_000:.3f} kWh/K")
     print(f"  R_sa        = {R_sa*1000:.3f} K/kW")
     print(f"  R_ab        = {R_ab*1000:.3f} K/kW")
     print(f"  R_bo        = {R_bo*1000:.3f} K/kW")
@@ -189,6 +190,8 @@ def main():
     Treturn_60 = df[treturn].astype(float).rolling('60min', min_periods=1).mean().to_numpy()
     # Use smoothed power for simulation/fitting to reduce noise
     P_total_vals = df['P_total_smooth'].astype(float).to_numpy()
+    
+    # save values to 
 
     Ts_sim, Ta_sim, Tb_sim = simulate_3node(
         idx,
@@ -211,21 +214,6 @@ def main():
     mse = float(np.mean((Ta_sim - Ta_obs_vals) ** 2))
     rmse = float(np.sqrt(mse))
     print(f"RMSE between simulated and observed indoor temp: {rmse:.3f} °C")
-
-    # Aggregate capacities and resistances for reporting in convenient units
-    C_total = C_a + C_s + C_b
-    C_total_kWh_per_K = C_total / 3_600_000.0
-    C_air_kWh_per_K = C_a / 3_600_000.0
-    C_slab_kWh_per_K = C_s / 3_600_000.0
-    C_struct_kWh_per_K = C_b / 3_600_000.0
-    R_total_K_per_kW = R_total * 1000.0
-
-    print("\n=== Effective storage & loss ===")
-    print(f"  C_air      = {C_air_kWh_per_K:.3f} kWh/K")
-    print(f"  C_slab     = {C_slab_kWh_per_K:.3f} kWh/K")
-    print(f"  C_struct   = {C_struct_kWh_per_K:.3f} kWh/K")
-    print(f"  C_total    = {C_total_kWh_per_K:.3f} kWh/K")
-    print(f"  R_total    = {R_total_K_per_kW:.3f} K/kW")
 
     # Save parameters & basic stats
     output_dir = Path('output')
