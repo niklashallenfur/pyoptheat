@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from scipy.optimize import least_squares
 
 from load_data import load_data
 
@@ -26,7 +27,7 @@ def compute_capacities_and_resistances():
     # Slab capacity
     slab_area = 11.0 * 9.0  # m²
     # slab_thickness = 0.42    # m
-    slab_thickness = 0.42    # m
+    slab_thickness = 0.41    # m
     slab_volume = slab_area * slab_thickness
     rho_concrete = 2400.0    # kg/m³
     cp_concrete = 880.0      # J/(kg*K)
@@ -42,14 +43,14 @@ def compute_capacities_and_resistances():
     air_mass = air_volume * rho_air
     C_a = air_mass * cp_air
     # C_a = C_a * 2.5
-    C_a = 1 * 0.08 * 3600 * 1000
+    # C_a = 1 * 0.07 * 3600 * 1000
     # C_a = 1 * 0.05 * 3600 * 1000
     
     
 
     # Structure capacity: less certain, assume, say, 5x air capacity as a starting point
     C_b = 15 * C_a  # J/K (equiv. to 5x air capacity)
-    C_b = 5.3 * 3600 * 1000
+    C_b = 6.3 * 3600 * 1000
 
     # Total R from slab to outdoor (K/W)
     R_total = 8.3 / 1000.0  # K/kW => K/W
@@ -132,6 +133,50 @@ def simulate_3node(idx, Tout, P_rad, Ta_obs,
     return Ts, Ta, Tb
 
 
+def pack_params_Rs(R_sa, R_ab, R_bo):
+    """Pack only the three resistances into a 1D log-space array.
+
+    C's are kept fixed at their physically based starting values.
+    """
+    return np.log([R_sa, R_ab, R_bo])
+
+
+def unpack_params_Rs(theta):
+    """Unpack log-parameters back to physical R values."""
+    R_sa, R_ab, R_bo = np.exp(theta)
+    return R_sa, R_ab, R_bo
+
+
+def residuals_theta_Rs(theta, idx, Tout_vals, P_total_vals, Ta_obs_vals,
+                       C_a, C_s, C_b):
+    """Residuals for least-squares when fitting only the R's.
+
+    C_a, C_s, C_b are fixed; we only optimize R_sa, R_ab, R_bo.
+    Returns residuals Ta_sim - Ta_obs for use in least_squares.
+    """
+    R_sa, R_ab, R_bo = unpack_params_Rs(theta)
+
+    # Simple guard: avoid obviously unrealistic parameters that can
+    # lead to numerical blow-ups by returning large residuals.
+    if not np.all(np.isfinite([R_sa, R_ab, R_bo])):
+        return np.ones_like(Ta_obs_vals) * 1e6
+
+    Ts_sim, Ta_sim, Tb_sim = simulate_3node(
+        idx,
+        Tout_vals,
+        P_total_vals,
+        Ta_obs_vals,
+        C_a=C_a,
+        C_s=C_s,
+        C_b=C_b,
+        R_sa=R_sa,
+        R_ab=R_ab,
+        R_bo=R_bo,
+    )
+
+    return Ta_sim - Ta_obs_vals
+
+
 def main():
     # Sensors (same as in estimate_house_heat_exchange.py)
     tout = 'sensor.torild_air_temperature'
@@ -205,24 +250,55 @@ def main():
 
     # --- End of data loading & preprocessing block ---
 
-    # Get fixed thermal parameters
-    C_a, C_s, C_b, R_sa, R_ab, R_bo = compute_capacities_and_resistances()
-    print("Capacities/Resistances:")
-    print(f"  C_a (air)   = {C_a/3_600_000:.3f} kWh/K")
-    print(f"  C_s (slab)  = {C_s/3_600_000:.3f} kWh/K")
-    print(f"  C_b (struct)= {C_b/3_600_000:.3f} kWh/K")
-    print(f"  C_total     = {(C_a + C_s + C_b)/3_600_000:.3f} kWh/K")
+    # Get initial thermal parameters (good starting values)
+    C_a0, C_s0, C_b0, R_sa0, R_ab0, R_bo0 = compute_capacities_and_resistances()
+    print("Initial capacities/resistances (from assumptions):")
+    print(f"  C_a0 (air)   = {C_a0/3_600_000:.3f} kWh/K")
+    print(f"  C_s0 (slab)  = {C_s0/3_600_000:.3f} kWh/K")
+    print(f"  C_b0 (struct)= {C_b0/3_600_000:.3f} kWh/K")
+    print(f"  C_total0     = {(C_a0 + C_s0 + C_b0)/3_600_000:.3f} kWh/K")
+    print(f"  R_sa0        = {R_sa0*1000:.3f} K/kW")
+    print(f"  R_ab0        = {R_ab0*1000:.3f} K/kW")
+    print(f"  R_bo0        = {R_bo0*1000:.3f} K/kW")
+    R_total0 = R_sa0 + R_ab0 + R_bo0
+    print(f"  R_total0     = {R_total0:.3e} K/W  ({R_total0*1000:.2f} K/kW)")
+
+    # --- Nonlinear least-squares fit of R_sa, R_ab, R_bo only ---
+    theta0 = pack_params_Rs(R_sa0, R_ab0, R_bo0)
+
+    print("\nStarting nonlinear fit of 3 R's (C's fixed)...")
+    res = least_squares(
+        residuals_theta_Rs,
+        theta0,
+        args=(idx, Tout_vals, P_total_vals, Ta_obs_vals, C_a0, C_s0, C_b0),
+        method="trf",
+        verbose=2,
+        max_nfev=50,
+    )
+    R_sa, R_ab, R_bo = unpack_params_Rs(res.x)
+
+    # C's are kept fixed
+    C_a, C_s, C_b = C_a0, C_s0, C_b0
+
+    print("\nFitted resistances (C's fixed):")
+    print(f"  C_a (air)   = {C_a/3_600_000:.3f} kWh/K (fixed)")
+    print(f"  C_s (slab)  = {C_s/3_600_000:.3f} kWh/K (fixed)")
+    print(f"  C_b (struct)= {C_b/3_600_000:.3f} kWh/K (fixed)")
+    print(f"  C_total     = {(C_a + C_s + C_b)/3_600_000:.3f} kWh/K (fixed)")
     print(f"  R_sa        = {R_sa*1000:.3f} K/kW")
     print(f"  R_ab        = {R_ab*1000:.3f} K/kW")
     print(f"  R_bo        = {R_bo*1000:.3f} K/kW")
     R_total = R_sa + R_ab + R_bo
     print(f"  R_total     = {R_total:.3e} K/W  ({R_total*1000:.2f} K/kW)")
 
-    # From here on, idx/Tout_vals/Ta_obs_vals/Tflow_60/Treturn_60/P_total_vals
-    # are treated as ready-to-use inputs (either freshly computed above or
-    # potentially loaded from a cached file in a future refactor).
+    print("\nLeast-squares termination status:")
+    print(f"  success      = {res.success}")
+    print(f"  status       = {res.status}")
+    print(f"  message      = {res.message}")
+    print(f"  nfev         = {res.nfev}")
 
-    # save values to 
+    # From here on, idx/Tout_vals/Ta_obs_vals/Tflow_60/Treturn_60/P_total_vals
+    # are treated as ready-to-use inputs and we simulate with the fitted params.
 
     Ts_sim, Ta_sim, Tb_sim = simulate_3node(
         idx,
@@ -283,6 +359,12 @@ def main():
             'R_sa_K_per_W': R_sa,
             'R_ab_K_per_W': R_ab,
             'R_bo_K_per_W': R_bo,
+            'C_a0_J_per_K_initial': C_a0,
+            'C_s0_J_per_K_initial': C_s0,
+            'C_b0_J_per_K_initial': C_b0,
+            'R_sa0_K_per_W_initial': R_sa0,
+            'R_ab0_K_per_W_initial': R_ab0,
+            'R_bo0_K_per_W_initial': R_bo0,
         },
         'metrics': {
             'RMSE_Thouse_degC': rmse,
