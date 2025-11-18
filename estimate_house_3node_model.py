@@ -26,7 +26,7 @@ def compute_capacities_and_resistances():
     # Slab capacity
     slab_area = 11.0 * 9.0  # m²
     # slab_thickness = 0.42    # m
-    slab_thickness = 0.06    # m
+    slab_thickness = 0.42    # m
     slab_volume = slab_area * slab_thickness
     rho_concrete = 2400.0    # kg/m³
     cp_concrete = 880.0      # J/(kg*K)
@@ -34,24 +34,30 @@ def compute_capacities_and_resistances():
     C_s = slab_mass * cp_concrete
 
     # Air capacity (single effective zone)
-    floor_area = 340.0       # m²
+    floor_area = 135.0       # m²
     height = 2.5             # m
     air_volume = floor_area * height
     rho_air = 1.2            # kg/m³
     cp_air = 1000.0          # J/(kg*K)
     air_mass = air_volume * rho_air
     C_a = air_mass * cp_air
+    # C_a = C_a * 2.5
+    C_a = 1 * 0.08 * 3600 * 1000
+    # C_a = 1 * 0.05 * 3600 * 1000
+    
+    
 
     # Structure capacity: less certain, assume, say, 5x air capacity as a starting point
-    C_b = 10.0 * 3600 * 1000  # J/K (equiv. to 5x air capacity)
+    C_b = 15 * C_a  # J/K (equiv. to 5x air capacity)
+    C_b = 5.3 * 3600 * 1000
 
     # Total R from slab to outdoor (K/W)
     R_total = 8.3 / 1000.0  # K/kW => K/W
 
     # Split R_total into three segments; air-structure typically large, so bias there
-    R_sa = 0.1 * R_total
-    R_ab = 0.4 * R_total
-    R_bo = 0.5 * R_total
+    R_sa = 0.20 * R_total
+    R_ab = 0.52 * R_total
+    R_bo = 0.28 * R_total
 
     return C_a, C_s, C_b, R_sa, R_ab, R_bo
 
@@ -139,35 +145,67 @@ def main():
 
     stockholm_tz = ZoneInfo('Europe/Stockholm')
 
-    # Use same long period for now
+    # --- Define analysis period (Stockholm time) ---
     start_stockholm = datetime(2025, 1, 15, 0, 0, 0).replace(tzinfo=stockholm_tz)
     end_stockholm = datetime(2025, 2, 16, 0, 0, 0).replace(tzinfo=stockholm_tz)
-    
+
     # start_stockholm = datetime(2025, 11, 1, 0, 0, 0).replace(tzinfo=stockholm_tz)
     # end_stockholm = datetime(2025, 11, 17, 0, 0, 0).replace(tzinfo=stockholm_tz)
 
+    # --- Data loading & preprocessing block ---
+    # This block is isolated so it can be cached to disk.
     start_utc = start_stockholm.astimezone(ZoneInfo('UTC'))
     end_utc = end_stockholm.astimezone(ZoneInfo('UTC'))
 
-    print(f"Loading house data from {start_stockholm.isoformat()} to {end_stockholm.isoformat()} (Stockholm time)")
-    print(f"UTC times: {start_utc.isoformat()} to {end_utc.isoformat()}")
+    output_dir = Path('output')
+    output_dir.mkdir(exist_ok=True)
+    period_tag = f"{start_stockholm.date()}_to_{end_stockholm.date()}"
+    cache_path = output_dir / f"house_3node_clean_{period_tag}.parquet"
 
-    df = load_data([tout, thouse, pradiator, tflow, treturn], from_time=start_utc.timestamp(), to_time=end_utc.timestamp())
-    if df.empty:
-        raise ValueError("No data found for the specified period")
+    if cache_path.exists():
+        print(f"Loading preprocessed data from cache: {cache_path}")
+        df = pd.read_parquet(cache_path)
+    else:
+        print(f"Loading house data from {start_stockholm.isoformat()} to {end_stockholm.isoformat()} (Stockholm time)")
+        print(f"UTC times: {start_utc.isoformat()} to {end_utc.isoformat()}")
 
-    print(f"Loaded {len(df)} samples from {df.index[0]} to {df.index[-1]}")
+        df = load_data([tout, thouse, pradiator, tflow, treturn], from_time=start_utc.timestamp(), to_time=end_utc.timestamp())
+        if df.empty:
+            raise ValueError("No data found for the specified period")
 
-    radiator_w = df[pradiator].astype(float).fillna(0.0).clip(lower=0.0)
-    df['P_total'] = radiator_w + constant_appliances_power
+        print(f"Loaded {len(df)} samples from {df.index[0]} to {df.index[-1]}")
 
-    # smooth power for plotting and fitting: 60-minute average to reduce noise
-    try:
-        df['P_total_smooth'] = df['P_total'].rolling('60min', min_periods=1).mean()
-    except Exception:
-        df['P_total_smooth'] = df['P_total'].rolling(60, min_periods=1).mean()
+        # Basic cleaning and derived quantities
+        radiator_w = df[pradiator].astype(float).fillna(0.0).clip(lower=0.0)
+        df['P_total'] = radiator_w + constant_appliances_power
 
-    # Get fixed parameters
+        # Smooth power for plotting and fitting: 60-minute average to reduce noise
+        try:
+            df['P_total_smooth'] = df['P_total'].rolling('60min', min_periods=1).mean()
+        except Exception:
+            df['P_total_smooth'] = df['P_total'].rolling(60, min_periods=1).mean()
+
+        # 60-minute rolling means for key temperature signals
+        df['Tout_60'] = df[tout].astype(float).rolling('60min', min_periods=1).mean()
+        df['Ta_obs_60'] = df[thouse].astype(float).rolling('60min', min_periods=1).mean()
+        df['Tflow_60'] = df[tflow].astype(float).rolling('60min', min_periods=1).mean()
+        df['Treturn_60'] = df[treturn].astype(float).rolling('60min', min_periods=1).mean()
+
+        # Persist cleaned/preprocessed data for future runs
+        df.to_parquet(cache_path)
+        print(f"Saved preprocessed data to {cache_path}")
+
+    # Prepare regularly used vectors (using precomputed 60-minute rolling means)
+    idx = df.index
+    Tout_vals = df['Tout_60'].astype(float).to_numpy()
+    Ta_obs_vals = df['Ta_obs_60'].astype(float).to_numpy()
+    Tflow_60 = df['Tflow_60'].astype(float).to_numpy()
+    Treturn_60 = df['Treturn_60'].astype(float).to_numpy()
+    P_total_vals = df['P_total_smooth'].astype(float).to_numpy()
+
+    # --- End of data loading & preprocessing block ---
+
+    # Get fixed thermal parameters
     C_a, C_s, C_b, R_sa, R_ab, R_bo = compute_capacities_and_resistances()
     print("Capacities/Resistances:")
     print(f"  C_a (air)   = {C_a/3_600_000:.3f} kWh/K")
@@ -180,17 +218,10 @@ def main():
     R_total = R_sa + R_ab + R_bo
     print(f"  R_total     = {R_total:.3e} K/W  ({R_total*1000:.2f} K/kW)")
 
-    idx = df.index
-    # Use 60-minute averaged temperatures to reduce noise
-    Tout_vals = df[tout].astype(float).rolling('60min', min_periods=1).mean().to_numpy()
-    Ta_obs_vals = df[thouse].astype(float).rolling('60min', min_periods=1).mean().to_numpy()
+    # From here on, idx/Tout_vals/Ta_obs_vals/Tflow_60/Treturn_60/P_total_vals
+    # are treated as ready-to-use inputs (either freshly computed above or
+    # potentially loaded from a cached file in a future refactor).
 
-    # 60-minute averaged radiator flow and return temps for comparison with simulated slab temp
-    Tflow_60 = df[tflow].astype(float).rolling('60min', min_periods=1).mean().to_numpy()
-    Treturn_60 = df[treturn].astype(float).rolling('60min', min_periods=1).mean().to_numpy()
-    # Use smoothed power for simulation/fitting to reduce noise
-    P_total_vals = df['P_total_smooth'].astype(float).to_numpy()
-    
     # save values to 
 
     Ts_sim, Ta_sim, Tb_sim = simulate_3node(
@@ -213,12 +244,23 @@ def main():
     # Simple error metric
     mse = float(np.mean((Ta_sim - Ta_obs_vals) ** 2))
     rmse = float(np.sqrt(mse))
-    print(f"RMSE between simulated and observed indoor temp: {rmse:.3f} °C")
+    print(f"RMSE between simulated and observed indoor temp: {rmse:.4f} °C")
+
+    # Aggregate metrics for overall heat loss estimate
+    # Use observed indoor temp and outdoor temp (both 60-min means) and total heating power
+    delta_T = Ta_obs_vals - Tout_vals
+    avg_delta_T = float(np.nanmean(delta_T))
+    avg_P_total = float(np.nanmean(P_total_vals))
+    if avg_P_total > 0:
+        R_est = avg_delta_T / (avg_P_total / 1000.0)  # K/kW
+    else:
+        R_est = float('nan')
+
+    print(f"Average ΔT (house - outdoor): {avg_delta_T:.3f} K")
+    print(f"Average total heating power: {avg_P_total:.1f} W")
+    print(f"Estimated overall R ≈ {R_est:.3f} K/kW from ΔT/P")
 
     # Save parameters & basic stats
-    output_dir = Path('output')
-    output_dir.mkdir(exist_ok=True)
-    period_tag = f"{start_stockholm.date()}_to_{end_stockholm.date()}"
     out_json = output_dir / f"house_3node_{period_tag}.json"
 
     output_data = {
@@ -244,6 +286,9 @@ def main():
         },
         'metrics': {
             'RMSE_Thouse_degC': rmse,
+            'avg_delta_T_K': avg_delta_T,
+            'avg_P_total_W': avg_P_total,
+            'R_est_K_per_kW_from_deltaT_over_P': R_est,
         },
     }
 
@@ -270,7 +315,7 @@ def main():
     ax2.tick_params(axis='y', labelsize=12)
 
     ax.set_title(
-        f"3-node house model: RMSE = {rmse:.2f} °C, R_total = {(R_sa + R_ab + R_bo)*1000:.2f} K/kW",
+        f"3-node house model: RMSE = {rmse:.4f} °C, R_total = {(R_sa + R_ab + R_bo)*1000:.2f} K/kW",
         fontsize=18,
     )
     ax.set_xlabel('Time (Stockholm timezone)', fontsize=16)
